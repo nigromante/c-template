@@ -1,0 +1,8 @@
+CompileFlags:
+  Add: [-xc, -std=c17, -Wall, -Wextra, -I../../../../include  -Isrc]
+  
+  # Remove flags that might interfere with clangd (e.g., specific to GCC)
+  Remove: [-mabi]
+  
+  # Set the compiler path if clangd can't find your headers automatically
+  Compiler: /usr/bin/gcc
