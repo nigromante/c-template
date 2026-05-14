@@ -5,21 +5,21 @@ EXE = qrcode
 SRCDIR = ./src
 OBJDIR = ./obj/
 BINDIR = ./bin/
-INSTALLDIR = ../test/bin
+INSTALLDIR = ../../test/bin
 
 # Files
 SRCS := $(shell find $(SRCDIR) -name "*.c")
 OBJS_TMP = $(patsubst %.c,%.o,$(SRCS))
 OBJS = $(subst $(SRCDIR),$(OBJDIR), $(OBJS_TMP))
 TARGET = $(BINDIR)/$(EXE)
-INCLUDE = -I include -I ../libs/libqrcode/export
+INCLUDE = -I include -I ../../libs/libqrcode/export
 
 
 # Compiler-Linker flags
 CC = gcc
 
 CFLAGS = -Wall -g
-LDFLAGS = -L../libs/libqrcode/bin
+LDFLAGS = -L../../libs/libqrcode/bin
 LDLIBS = -lqrcode
 
 
