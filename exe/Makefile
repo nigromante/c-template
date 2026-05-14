@@ -5,7 +5,7 @@ EXE = qrcode
 SRCDIR = ./src
 OBJDIR = ./obj/
 BINDIR = ./bin/
-INSTALLDIR = ../../../test/bin
+INSTALLDIR = ../test/bin
 
 # Files
 SRCS := $(shell find $(SRCDIR) -name "*.c")

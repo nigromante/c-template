@@ -6,7 +6,7 @@ SRCDIR = ./src
 INCDIR = include
 OBJDIR = ./obj
 BINDIR = ./bin
-INSTALLDIR = ../../../../test/libs
+INSTALLDIR = ../../test/libs
 EXPDIR = ./export
 
 # Files
