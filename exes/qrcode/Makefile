@@ -59,7 +59,7 @@ clean:
 	rm -rf $(OBJDIR) $(BINDIR)
 	@echo
 
-build: clean $(TARGET)
+build: $(TARGET)
 
 all:  clean build install
 
