@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-export LD_LIBRARY_PATH=~/work/c-template/test/libs
+REAL_DIR=$(dirname "$(readlink -f "$0")")
+source ${REAL_DIR}/exports.sh
 
 ./$@
-

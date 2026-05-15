@@ -1,30 +1,40 @@
+$(info )
+$(info  ******************************************************)
+$(info  ** Makefile : QRCODE                                **)
+$(info  ******************************************************)
+
+
 # Bin file
 EXE = qrcode 
 
 # Folders
 SRCDIR = ./src
-OBJDIR = ./obj/
-BINDIR = ./bin/
+OBJDIR = ./obj
+BINDIR = ./bin
 INSTALLDIR = ../../test/bin
+TESTDIR = ../../libs/tests
 
 # Files
 SRCS := $(shell find $(SRCDIR) -name "*.c")
 OBJS_TMP = $(patsubst %.c,%.o,$(SRCS))
 OBJS = $(subst $(SRCDIR),$(OBJDIR), $(OBJS_TMP))
 TARGET = $(BINDIR)/$(EXE)
-INCLUDE = -I include -I ../../libs/libqrcode/export
+INCLUDE = -I include -I $(TESTDIR)/include
 
 
 # Compiler-Linker flags
 CC = gcc
 
 CFLAGS = -Wall -g
-LDFLAGS = -L../../libs/libqrcode/bin
+LDFLAGS = -L$(TESTDIR)
 LDLIBS = -lqrcode
 
 
 # Link
 $(TARGET): $(OBJS) | $(BINDIR)
+	$(info  )
+	$(info Linking ... )
+	@echo -n "\t"  
 	$(CC) $(OBJS) -o $(TARGET) $(LDFLAGS) $(LDLIBS)
 
 $(BINDIR):
@@ -33,6 +43,8 @@ $(BINDIR):
 
 # Compile
 $(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
+	$(info Compiling ... )
+	@echo -n "\t"  
 	@if [ ! -d "$(dir $@)" ]; then mkdir -p $(dir $@); fi
 	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
@@ -41,24 +53,31 @@ $(OBJDIR):
 
 
 clean:
+	$(info  )
+	$(info Cleaning ... )
+	@echo -n "\t"  
 	rm -f $(OBJS) $(TARGET)
+	@echo
 
 build: clean $(TARGET)
 
-all:  clean build run
+all:  clean build install
 
 run:
-	@ . ./exports.sh  &&  $(TARGET)
+	@./test.sh $(TESTDIR)  $(TARGET)
 
 debug:
-	gdb  $(TARGET)
+	@./test.sh $(TESTDIR)  gdb $(TARGET)
+	#gdb  $(TARGET)
 
 install:
-	@echo "Installing ..."
+	$(info  )
+	$(info Installing ... )
+	@echo -n "\t"  
 	cp -f $(TARGET)  $(INSTALLDIR)
+	@echo
 
 help:
-	@clear
 	@echo  "Aliases"
 	@echo  "\talias mk='make'"
 	@echo  "\talias mka='make all'"
@@ -82,3 +101,5 @@ help:
 	@echo "Installer"
 	@echo "\tFolder           : " $(INSTALLDIR)
 	@echo
+
+

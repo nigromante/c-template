@@ -1,12 +1,17 @@
+$(info )
+$(info  ******************************************************)
+$(info  ** Makefile : LIBQRCODE                             **)
+$(info  ******************************************************)
+
 # Bin file
 EXE = libqrcode.so 
 
 # Folders
 SRCDIR = ./src
-INCDIR = include
+INCDIR = ./include
 OBJDIR = ./obj
 BINDIR = ./bin
-INSTALLDIR = ../../test/libs
+INSTALLDIR = ../../libs/tests
 EXPDIR = ./export
 
 # Files
@@ -21,38 +26,52 @@ INCLUDE = -I $(INCDIR)
 CC = gcc
 
 CFLAGS = -Wall -g -fPIC -fvisibility=hidden
-LDFLAGS = -L./lib -shared 
+#LDFLAGS = -L./lib -shared 
+LDFLAGS = -shared 
 LDLIBS = -lqrencode
 
 
 # Link
 $(TARGET): $(OBJS) | $(BINDIR)
-	$(CC) $(OBJS) -o $(TARGET) $(LDFLAGS) $(LDLIBS)
+	$(info  )
+	$(info Linking ... )
+	@echo -n "\t"  
+	$(CC) $(OBJS) -o $@ $(LDFLAGS) $(LDLIBS)
 
 $(BINDIR):
 	@mkdir -p $@
 
 # Compile
 $(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
+	$(info Compiling ... )
+	@echo -n "\t"  
 	@if [ ! -d "$(dir $@)" ]; then mkdir -p $(dir $@); fi
-	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
+	$(CC) $(CFLAGS) $(INCLUDE) -c $^ -o $@
 
 $(OBJDIR):
 	@mkdir -p $@
 
 
 clean:
+	$(info  )
+	$(info Cleaning ... )
+	@echo -n "\t"  
 	rm -f $(OBJS) $(TARGET)
+	@echo
 
-build: clean $(TARGET)
+build: $(TARGET) 
 
-all:  clean build run
+all:  clean build install
 
 
 install:
-	@echo "Installing ..."
+	$(info  )
+	$(info Installing ... )
+	@echo -n "\t"  
 	cp -f $(TARGET)   $(INSTALLDIR)
+	@echo -n "\t"  
 	cp -f $(EXPDIR)/*.h  $(INSTALLDIR)/include
+	@echo
 
 help:
 	@clear
