@@ -57,7 +57,7 @@ clean:
 	$(info  )
 	$(info Cleaning ... )
 	@echo -n "\t"  
-	rm -f $(OBJS) $(TARGET)
+	rm -rf $(OBJDIR) $(BINDIR)
 	@echo
 
 build: $(TARGET) 
