@@ -1,5 +1,5 @@
+#include "../include/shared.h"
 #include <qrencode.h>
-#include <shared.h>
 #include <stdio.h>
 
 PUBLIC void qrversion() { printf("\n qrcode : 1.0\n"); }
