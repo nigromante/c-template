@@ -12,6 +12,7 @@ INCDIR = ./include
 OBJDIR = ./obj
 BINDIR = ./bin
 INSTALLDIR = ../../libs/tests
+RELEASEDIR = ../../test/libs
 EXPDIR = ./export
 
 # Files
@@ -71,6 +72,11 @@ install:
 	cp -f $(TARGET)   $(INSTALLDIR)
 	@echo -n "\t"  
 	cp -f $(EXPDIR)/*.h  $(INSTALLDIR)/include
+	@echo
+	@echo -n "\t"  
+	cp -f $(TARGET)   $(RELEASEDIR)
+	@echo -n "\t"  
+	cp -f $(EXPDIR)/*.h  $(RELEASEDIR)/include
 	@echo
 
 help:
