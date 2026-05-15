@@ -1,1 +1,1 @@
-../../../libs/tests/include/qrcode.h
+../../../libs/libqrcode/export/qrcode.h
