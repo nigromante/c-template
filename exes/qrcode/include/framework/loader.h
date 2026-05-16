@@ -2,7 +2,7 @@
 #ifndef INIT_H
 #define INIT_H
 
-#include "../include/qrcode.h"
+#include "../libs/qrcode.h"
 
 void loader_init();
 

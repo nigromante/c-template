@@ -5,7 +5,7 @@
 #define NULL 0x00;
 #endif
 
-#include "../include/qrcode.h"
+#include "libs/qrcode.h"
 
 #ifdef FILE_MAIN
 QRCODE *qrcode = NULL;
@@ -13,7 +13,8 @@ QRCODE *qrcode = NULL;
 extern QRCODE *qrcode;
 #endif
 
-#include "../include/loader.h"
-#include "../include/proc.h"
+#include "framework/loader.h"
+
+#include "app/proc.h"
 
 #endif

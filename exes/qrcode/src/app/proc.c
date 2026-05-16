@@ -1,5 +1,5 @@
 
-#include "../include/matrix.h"
+#include "../../include/matrix.h"
 
 int proc_run(int argc, char **argv) {
 

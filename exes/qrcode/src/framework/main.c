@@ -1,6 +1,6 @@
 #define FILE_MAIN
 
-#include "../include/matrix.h"
+#include "../../include/matrix.h"
 
 int main(int argc, char **argv) {
 
