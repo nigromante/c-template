@@ -1,4 +1,3 @@
-#include "../include/a.h"
 #include "../include/qrcode.h"
 
 int main(int argc, char **argv) {
@@ -9,7 +8,7 @@ int main(int argc, char **argv) {
 
     qrcode->show("Julian Vidal Alarcon");
 
-    fn();
     qrcode_release(&qrcode);
+
     return 0;
 }
