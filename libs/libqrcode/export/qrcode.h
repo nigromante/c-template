@@ -1,6 +1,12 @@
 #ifndef QRCODE_EXPORT
 #define QRCODE_EXPORT
 
-int qrshow(char *text);
-void qrversion();
+typedef struct {
+    void (*version)();
+    int (*show)(char *);
+} QRCODE;
+
+QRCODE *qrcode_init();
+void qrcode_release(QRCODE **);
+
 #endif

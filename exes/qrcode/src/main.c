@@ -3,11 +3,13 @@
 
 int main(int argc, char **argv) {
 
-    qrversion();
+    QRCODE *qrcode = qrcode_init();
 
-    qrshow("Julian Vidal Alarcon");
+    qrcode->version();
+
+    qrcode->show("Julian Vidal Alarcon");
 
     fn();
-
+    qrcode_release(&qrcode);
     return 0;
 }

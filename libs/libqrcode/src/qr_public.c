@@ -1,10 +1,9 @@
-#include "../include/shared.h"
 #include <qrencode.h>
 #include <stdio.h>
 
-PUBLIC void qrversion() { printf("\n qrcode : 1.0\n"); }
+void qrversion() { printf("\n qrcode : 1.0\n"); }
 
-PUBLIC int qrshow(char *text) {
+int qrshow(char *text) {
 
     QRcode *qrcode = QRcode_encodeString(text, 0, QR_ECLEVEL_L, QR_MODE_8, 1);
     if (qrcode == NULL) {
