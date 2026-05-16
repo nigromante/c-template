@@ -13,10 +13,8 @@ QRCODE *qrcode = NULL;
 extern QRCODE *qrcode;
 #endif
 
-int proc_run(int argc, char **argv);
+int pmain(int argc, char **argv);
 
 #include "framework/loader.h"
-
-#include "app/proc.h"
 
 #endif

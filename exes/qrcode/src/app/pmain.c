@@ -1,7 +1,8 @@
-
 #include "../../include/matrix.h"
 
-int proc_run(int argc, char **argv) {
+#include "../../include/app/pmain.h"
+
+int pmain(int argc, char **argv) {
 
     qrcode->version();
 

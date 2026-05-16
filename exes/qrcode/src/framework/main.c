@@ -6,9 +6,9 @@ int main(int argc, char **argv) {
 
     loader_init();
 
-    proc_run(argc, argv);
+    int ret = pmain(argc, argv);
 
     loader_end();
 
-    return 0;
+    return ret;
 }
