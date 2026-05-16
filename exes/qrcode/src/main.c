@@ -1,14 +1,14 @@
-#include "../include/qrcode.h"
+#define FILE_MAIN
+
+#include "../include/matrix.h"
 
 int main(int argc, char **argv) {
 
-    QRCODE *qrcode = qrcode_init();
+    loader_init();
 
-    qrcode->version();
+    proc_run(argc, argv);
 
-    qrcode->show("Julian Vidal Alarcon");
-
-    qrcode_release(&qrcode);
+    loader_end();
 
     return 0;
 }
