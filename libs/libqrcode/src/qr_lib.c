@@ -1,8 +1,9 @@
-#include "../include/qr_public.h"
-#include "../include/shared.h"
 #include <stdlib.h>
 
+#include "../include/shared.h"
+
 #include "../export/qrcode.h"
+#include "../include/qr_public.h"
 
 PUBLIC QRCODE *qrcode_init() {
     QRCODE *qrcodePtr = (QRCODE *)malloc(sizeof(QRCODE));
