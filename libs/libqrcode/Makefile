@@ -32,7 +32,8 @@ CFLAGS = -Wall -g -fPIC -fvisibility=hidden
 LDFLAGS = -shared 
 LDLIBS = -lqrencode
 
-DEPSFLAGS = -MMD -MP -MF $(SRCDIR)/$*.d 
+DEPSFLAGS = -MMD -MP -MF $(SRCDIR)
+$(info ${DEPSFLAGS})
 
 # Link
 $(TARGET): $(OBJS) | $(BINDIR)
@@ -51,7 +52,7 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
 	$(info Compiling ... )
 	@echo -n "\t"  
 	@if [ ! -d "$(dir $@)" ]; then mkdir -p $(dir $@); fi
-	$(CC) $(DEPSFLAGS) $(CFLAGS) $(INCLUDE) -c $< -o $@
+	$(CC) $(DEPSFLAGS)/$*.d $(CFLAGS) $(INCLUDE) -c $< -o $@
 
 $(OBJDIR):
 	@mkdir -p $@
