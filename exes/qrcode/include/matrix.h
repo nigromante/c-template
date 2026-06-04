@@ -5,16 +5,14 @@
 #define NULL 0x00;
 #endif
 
-#include "libs/qrcode.h"
+int pmain(int argc, char **argv);
+
+#include "framework/loader.h"
 
 #ifdef FILE_MAIN
 QRCODE *qrcode = NULL;
 #else
 extern QRCODE *qrcode;
 #endif
-
-int pmain(int argc, char **argv);
-
-#include "framework/loader.h"
 
 #endif

@@ -1,10 +1,10 @@
+#include <qr_public.h>
 #include <qrencode.h>
 #include <stdio.h>
 
 void qrversion() { printf("\n qrcode : 1.0\n"); }
 
 int qrshow(char *text) {
-
     QRcode *qrcode = QRcode_encodeString(text, 0, QR_ECLEVEL_L, QR_MODE_8, 1);
     if (qrcode == NULL) {
         printf("Failed to generate QR code\n");

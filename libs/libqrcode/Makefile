@@ -17,6 +17,7 @@ EXPDIR = ./export
 
 # Files
 SRCS := $(shell find $(SRCDIR) -name "*.c")
+DEPS := $(SRCS:.c=.d)
 OBJS_TMP = $(patsubst %.c,%.o,$(SRCS))
 OBJS = $(subst $(SRCDIR),$(OBJDIR), $(OBJS_TMP))
 TARGET = $(BINDIR)/$(EXE)
@@ -31,6 +32,7 @@ CFLAGS = -Wall -g -fPIC -fvisibility=hidden
 LDFLAGS = -shared 
 LDLIBS = -lqrencode
 
+DEPSFLAGS = -MMD -MP -MF $(SRCDIR)/$*.d 
 
 # Link
 $(TARGET): $(OBJS) | $(BINDIR)
@@ -42,12 +44,14 @@ $(TARGET): $(OBJS) | $(BINDIR)
 $(BINDIR):
 	@mkdir -p $@
 
+-include $(DEPS)
+
 # Compile
 $(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
 	$(info Compiling ... )
 	@echo -n "\t"  
 	@if [ ! -d "$(dir $@)" ]; then mkdir -p $(dir $@); fi
-	$(CC) $(CFLAGS) $(INCLUDE) -c $^ -o $@
+	$(CC) $(DEPSFLAGS) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
 $(OBJDIR):
 	@mkdir -p $@
@@ -57,7 +61,7 @@ clean:
 	$(info  )
 	$(info Cleaning ... )
 	@echo -n "\t"  
-	rm -rf $(OBJDIR) $(BINDIR)
+	rm -rf $(OBJDIR) $(BINDIR) $(DEPS)
 	@echo
 
 build: $(TARGET) 
