@@ -33,7 +33,6 @@ LDFLAGS = -shared
 LDLIBS = -lqrencode
 
 DEPSFLAGS = -MMD -MP -MF $(SRCDIR)
-$(info ${DEPSFLAGS})
 
 # Link
 $(TARGET): $(OBJS) | $(BINDIR)
