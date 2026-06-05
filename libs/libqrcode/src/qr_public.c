@@ -1,7 +1,7 @@
 #include <qrencode.h>
 #include <stdio.h>
 
-#include "../include/qr_public.h"
+#include "include/qr_public.h"
 
 void qrversion() { printf("\n qrcode : 1.0\n"); }
 

@@ -1,9 +1,8 @@
 #include <stdlib.h>
 
-#include "../include/shared.h"
-
-#include "../export/qrcode.h"
-#include "../include/qr_public.h"
+#include "include/qr_public.h"
+#include "include/qrcode.h"
+#include "include/shared.h"
 
 PUBLIC QRCODE *qrcode_init() {
 
