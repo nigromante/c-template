@@ -1,6 +1,7 @@
 #include "../../include/matrix.h"
 
-#include "../../include/app/pmain.h"
+#define PMAIN_C
+#include "include/pmain.h"
 
 int pmain(int argc, char **argv) {
 
