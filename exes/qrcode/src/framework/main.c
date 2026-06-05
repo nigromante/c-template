@@ -1,6 +1,9 @@
-#define FILE_MAIN
+#define MAIN_C
 
-#include "../../include/matrix.h"
+#include "include/libscall.h"
+#include "include/loader.h"
+
+int pmain(int argc, char **argv);
 
 int main(int argc, char **argv) {
 

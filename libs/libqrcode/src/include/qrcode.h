@@ -1,5 +1,5 @@
-#ifndef INC_QRCODE
-#define INC_QRCODE
+#ifndef QRCODE_H
+#define QRCODE_H
 
 typedef struct {
     void (*version)();

@@ -1,0 +1,1 @@
+../../../../../../libs/libqrcode/export/qrcode.h

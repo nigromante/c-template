@@ -1,6 +1,6 @@
-#define FILE_INIT
+#define LOADER_C
 
-#include "../../include/matrix.h"
+#include "include/libscall.h"
 
 void loader_init() { qrcode = qrcode_init(); }
 

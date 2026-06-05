@@ -1,5 +1,5 @@
-#ifndef SHARED_FILE
-#define SHARED_FILE
+#ifndef SHARED_H
+#define SHARED_H
 
 #define PUBLIC __attribute__((visibility("default")))
 
