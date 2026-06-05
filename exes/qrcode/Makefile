@@ -54,7 +54,7 @@ $(OBJDIR):
 	@mkdir -p $@
 
 
-
+.PHONY: clean
 clean:
 	$(info  )
 	$(info Cleaning ... )
