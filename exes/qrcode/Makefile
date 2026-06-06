@@ -1,11 +1,17 @@
-$(info )
-$(info  ******************************************************)
-$(info  ** Makefile : QRCODE                                **)
-$(info  ******************************************************)
-
+RED    := $(shell tput -Txterm setaf 1)
+GREEN  := $(shell tput -Txterm setaf 2)
+YELLOW := $(shell tput -Txterm setaf 3)
+BLUE   := $(shell tput -Txterm setaf 4)
+RESET  := $(shell tput -Txterm sgr0)
 
 # Bin file
-EXE = qrcode 
+EXE = qrcode
+
+$(info )
+$(info  ******************************************************)
+$(info  ** Makefile : [$(YELLOW)$(EXE)$(RESET)] )
+$(info  ******************************************************)
+
 
 # Folders
 SRCDIR = ./src
@@ -35,8 +41,9 @@ DEPSFLAGS = -MMD -MP -MF $(SRCDIR)/$*.d
 $(TARGET): $(OBJS) | $(BINDIR)
 	$(info  )
 	$(info Linking ... )
-	@echo -n "\t"  
+	@echo -n "\t${YELLOW}"  
 	$(CC) $(OBJS) -o $(TARGET) $(LDFLAGS) $(LDLIBS)
+	@echo -n "${RESET}"  
 
 $(BINDIR):
 	@mkdir -p $@
@@ -46,8 +53,9 @@ $(BINDIR):
 # Compile
 $(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
 	@if [ ! -d "$(dir $@)" ]; then mkdir -p $(dir $@); fi
-	@echo -n "Compiling ... \t"  
+	@echo -n "\t${YELLOW}"  
 	$(CC) $(DEPSFLAGS) $(CFLAGS) $(INCLUDE) -c $< -o $@
+	@echo -n "${RESET}"  
 
 $(OBJDIR):
 	@mkdir -p $@
@@ -57,9 +65,9 @@ $(OBJDIR):
 clean:
 	$(info  )
 	$(info Cleaning ... )
-	@echo -n "\t"  
+	@echo -n "\t${YELLOW}"  
 	rm -rf $(OBJDIR) $(BINDIR) $(DEPS)
-	@echo
+	@echo "${RESET}"
 
 build: $(TARGET)
 
@@ -75,9 +83,9 @@ debug:
 install:
 	$(info  )
 	$(info Installing ... )
-	@echo -n "\t"  
+	@echo -n "\t${YELLOW}"  
 	cp -f $(TARGET)  $(INSTALLDIR)
-	@echo
+	@echo "${RESET}"
 
 help:
 	@echo  "Aliases"

@@ -1,8 +1,14 @@
+RED    := $(shell tput -Txterm setaf 1)
+GREEN  := $(shell tput -Txterm setaf 2)
+YELLOW := $(shell tput -Txterm setaf 3)
+BLUE   := $(shell tput -Txterm setaf 4)
+RESET  := $(shell tput -Txterm sgr0)
+
 EXEDIR = ./qrcode
 
 $(info )
 $(info  ----------------------------------------------------------)
-$(info  ** Makefile : [$(EXEDIR)] )
+$(info  ** Makefile : [$(RED)$(EXEDIR)$(RESET)] )
 $(info  ----------------------------------------------------------)
 $(info )
 

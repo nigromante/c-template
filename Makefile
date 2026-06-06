@@ -1,8 +1,14 @@
+RED    := $(shell tput -Txterm setaf 1)
+GREEN  := $(shell tput -Txterm setaf 2)
+YELLOW := $(shell tput -Txterm setaf 3)
+BLUE   := $(shell tput -Txterm setaf 4)
+RESET  := $(shell tput -Txterm sgr0)
+
 EXEDIR = ./libs ./exes
 
 $(info )
 $(info ===========================================================)
-$(info  ** Makefile : [$(EXEDIR)] )
+$(info  ** Makefile : [$(BLUE)$(EXEDIR)$(RESET)] )
 $(info ===========================================================)
 $(info )
 
@@ -11,7 +17,7 @@ build:
 	$(info Building ... )
 	$(info ===========================================================)
 	$(info  )
-	$(foreach dir, $(EXEDIR) , $(MAKE) build -C $(dir); )
+	$(foreach dir, $(EXEDIR) , $(MAKE) build -C $(dir);  )
 	@echo
 
 all:
