@@ -7,10 +7,7 @@ RESET  := $(shell tput -Txterm sgr0)
 # Bin file
 EXE = libqrcode.so
 
-$(info )
-$(info  ******************************************************)
-$(info  ** Makefile : [$(YELLOW)$(EXE)$(RESET)] )
-$(info  ******************************************************)
+$(info [$(YELLOW)$(EXE)$(RESET)] )
 
 # Folders
 SRCDIR = ./src

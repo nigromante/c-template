@@ -6,35 +6,20 @@ RESET  := $(shell tput -Txterm sgr0)
 
 EXEDIR = ./libs ./exes
 
-$(info )
-$(info ===========================================================)
-$(info  ** Makefile : [$(BLUE)$(EXEDIR)$(RESET)] )
-$(info ===========================================================)
-$(info )
+$(info [$(BLUE)$(EXEDIR)$(RESET)] )
 
 build:
-	$(info ===========================================================)
-	$(info Building ... )
-	$(info ===========================================================)
-	$(info  )
 	$(foreach dir, $(EXEDIR) , $(MAKE) build -C $(dir);  )
 	@echo
 
 all:
-	$(info ===========================================================)
-	$(info Rebuilding ... )
-	$(info ===========================================================)
-	$(info  )
 	$(foreach dir, $(EXEDIR) , $(MAKE) all -C $(dir); )
 	@echo
 
 clean:
-	$(info ===========================================================)
-	$(info Cleaning ... )
-	$(info ===========================================================)
-	$(info  )
 	$(foreach dir, $(EXEDIR) , $(MAKE) clean -C $(dir); )
-	@echo
+	@echo -n "\t${YELLOW}"
 	rm -f ./test/bin/* ./test/libs/include/* ./test/libs/*.so
+	@echo -n "${RESET}"
 	
 

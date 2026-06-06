@@ -6,34 +6,19 @@ RESET  := $(shell tput -Txterm sgr0)
 
 EXEDIR = ./libqrcode
 
-$(info )
-$(info  ----------------------------------------------------------)
-$(info  ** Makefile : [$(RED)$(EXEDIR)$(RESET)] )
-$(info  ----------------------------------------------------------)
-$(info )
+$(info [$(RED)$(EXEDIR)$(RESET)] )
 
 build:
-	$(info  ----------------------------------------------------------)
-	$(info Building ... )
-	$(info  ----------------------------------------------------------)
-	$(info  )
 	$(foreach dir, $(EXEDIR) , $(MAKE) build install -C $(dir); )
 	@echo
 
 all:
-	$(info  ----------------------------------------------------------)
-	$(info Rebuilding ... )
-	$(info  ----------------------------------------------------------)
-	$(info  )
 	$(foreach dir, $(EXEDIR) , $(MAKE) all -C $(dir); )
 	@echo
 
 clean:
-	$(info  ----------------------------------------------------------)
-	$(info Cleaning ... )
-	$(info  ----------------------------------------------------------)
-	$(info  )
 	$(foreach dir, $(EXEDIR) , $(MAKE) clean -C $(dir); )
-	@echo
+	@echo -n "\t${YELLOW}"
 	rm -f ./tests/include/* ./tests/*.so
+	@echo -n "${RESET}"
 
