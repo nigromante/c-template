@@ -48,9 +48,8 @@ $(BINDIR):
 
 # Compile
 $(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
-	$(info Compiling ... )
-	@echo -n "\t"  
 	@if [ ! -d "$(dir $@)" ]; then mkdir -p $(dir $@); fi
+	@echo -n "Compiling ... \t"  
 	$(CC) $(DEPSFLAGS)/$*.d $(CFLAGS) $(INCLUDE) -c $< -o $@
 
 $(OBJDIR):
