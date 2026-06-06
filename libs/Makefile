@@ -4,7 +4,7 @@ YELLOW := $(shell tput -Txterm setaf 3)
 BLUE   := $(shell tput -Txterm setaf 4)
 RESET  := $(shell tput -Txterm sgr0)
 
-EXEDIR = ./libqrcode ./libqrcode2
+EXEDIR = ./libqrcode
 
 $(info )
 $(info  ----------------------------------------------------------)
