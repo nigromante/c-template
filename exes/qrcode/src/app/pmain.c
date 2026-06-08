@@ -9,5 +9,7 @@ int pmain(int argc, char **argv) {
 
     qrcode->show("Julian Vidal Alarcon");
 
+    vio->print();
+
     return 0;
 }
