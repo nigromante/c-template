@@ -6,7 +6,7 @@ RESET  := $(shell tput -Txterm sgr0)
 
 EXEDIR = ./libs ./exes
 
-$(info [$(BLUE)$(EXEDIR)$(RESET)] )
+# $(info [$(BLUE)$(EXEDIR)$(RESET)] )
 
 build:
 	$(foreach dir, $(EXEDIR) , $(MAKE) build -C $(dir);  )
@@ -21,5 +21,8 @@ clean:
 	@echo -n "\t${YELLOW}"
 	rm -f ./test/bin/* ./test/libs/include/* ./test/libs/*.so
 	@echo -n "${RESET}"
-	
+
+.phony run:
+run:
+	 @bash ./test/run.sh ./test/bin/qrcode
 

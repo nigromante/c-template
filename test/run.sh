@@ -1,1 +1,4 @@
-../scripts/run.sh
+#!/usr/bin/env bash
+cwd=$(dirname $(realpath "$0"))
+export LD_LIBRARY_PATH="${cwd}/libs"
+$@

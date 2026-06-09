@@ -1,2 +1,2 @@
 
-void vio_print();
+void vio_print(const char *level, const char *format, ...);
