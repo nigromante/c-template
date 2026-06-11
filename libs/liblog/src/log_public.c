@@ -3,25 +3,25 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define VIO_PUBLIC_C
-#include "include/vio_public.h"
+#define LOG_PUBLIC_C
+#include "include/log_public.h"
 
-void vio_loggerCreate() {
+void log_Instance() {
     logger = (tLogger *)malloc(sizeof(tLogger));
     memset(logger, 0x00, sizeof(tLogger));
 }
 
-void vio_loggerDelete() {
+void log_Release() {
     free(logger);
     logger = 0x00;
 }
 
-void vio_loggerAddListener(fn _fn) {
+void log_AddListener(fn _fn) {
     logger->lista[logger->total++] = _fn;
     return;
 }
 
-void vio_logger(int level, char *format, ...) {
+void log_Write(int level, char *format, ...) {
     char buffer[256];
     va_list args;
 

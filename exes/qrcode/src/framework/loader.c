@@ -4,10 +4,14 @@
 
 void loader_init() {
     qrcode = qrcode_init();
-    vio = vio_init();
+
+    logger = log_init();
+    logger->Instance();
 }
 
 void loader_end() {
     qrcode_release(&qrcode);
-    vio_release(&vio);
+
+    logger->Release();
+    log_release(&logger);
 }

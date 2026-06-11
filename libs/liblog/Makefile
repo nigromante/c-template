@@ -5,17 +5,18 @@ BLUE   := $(shell tput -Txterm setaf 4)
 RESET  := $(shell tput -Txterm sgr0)
 
 # Bin file
-EXE = qrcode
+EXE = liblog.so
 
 $(info [$(YELLOW)$(EXE)$(RESET)] )
 
-
 # Folders
 SRCDIR = ./src
+INCDIR = ./include
 OBJDIR = ./obj
 BINDIR = ./bin
-INSTALLDIR = ../../test/bin
-TESTDIR = ../../libs/tests
+INSTALLDIR = ../../libs/tests
+RELEASEDIR = ../../test/libs
+EXPDIR = ./export
 
 # Files
 SRCS := $(shell find $(SRCDIR) -name "*.c")
@@ -23,23 +24,25 @@ DEPS := $(SRCS:.c=.d)
 OBJS_TMP = $(patsubst %.c,%.o,$(SRCS))
 OBJS = $(subst $(SRCDIR),$(OBJDIR), $(OBJS_TMP))
 TARGET = $(BINDIR)/$(EXE)
-INCLUDE = -I include -I $(TESTDIR)/include
+INCLUDE = -I $(INCDIR)
+
 
 # Compiler-Linker flags
 CC = gcc
 
-CFLAGS = -Wall -g
-LDFLAGS = -L$(TESTDIR)
-LDLIBS = -lqrcode -llog
+CFLAGS = -Wall -g -fPIC -fvisibility=hidden
+#LDFLAGS = -L./lib -shared 
+LDFLAGS = -shared 
+LDLIBS = 
 
-DEPSFLAGS = -MMD -MP -MF $(SRCDIR)/$*.d 
+DEPSFLAGS = -MMD -MP -MF $(SRCDIR)
 
 # Link
 $(TARGET): $(OBJS) | $(BINDIR)
 	$(info  )
 	$(info Linking ... )
 	@echo -n "\t${YELLOW}"  
-	$(CC) $(OBJS) -o $(TARGET) $(LDFLAGS) $(LDLIBS)
+	$(CC) $(OBJS) -o $@ $(LDFLAGS) $(LDLIBS)
 	@echo -n "${RESET}"  
 
 $(BINDIR):
@@ -51,7 +54,7 @@ $(BINDIR):
 $(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
 	@if [ ! -d "$(dir $@)" ]; then mkdir -p $(dir $@); fi
 	@echo -n "\t${YELLOW}"  
-	$(CC) $(DEPSFLAGS) $(CFLAGS) $(INCLUDE) -c $< -o $@
+	$(CC) $(DEPSFLAGS)/$*.d $(CFLAGS) $(INCLUDE) -c $< -o $@
 	@echo -n "${RESET}"  
 
 $(OBJDIR):
@@ -66,47 +69,44 @@ clean:
 	rm -rf $(OBJDIR) $(BINDIR) $(DEPS)
 	@echo "${RESET}"
 
-build: $(TARGET)
+build: $(TARGET) 
 
 all:  clean build install
 
-run:
-	@./test.sh $(TESTDIR)  $(TARGET)
-
-debug:
-	@./test.sh $(TESTDIR)  gdb $(TARGET)
-	#gdb  $(TARGET)
 
 install:
 	$(info  )
 	$(info Installing ... )
 	@echo -n "\t${YELLOW}"  
-	cp -f $(TARGET)  $(INSTALLDIR)
+	cp -f $(TARGET)   $(INSTALLDIR)
+	@echo -n "\t"  
+	cp -f $(TARGET)   $(RELEASEDIR)
 	@echo "${RESET}"
 
 help:
+	@clear
 	@echo  "Aliases"
 	@echo  "\talias mk='make'"
 	@echo  "\talias mka='make all'"
 	@echo  "\talias mkc='make clean'"
 	@echo  "\talias mkb='make build'"
-	@echo  "\talias mkr='make run'"
-	@echo  "\talias mkd='make debug'"
 	@echo  "\talias mki='make install'"
 	@echo  "\talias mkh='make help'"
 	@echo
 	@echo "Folders:"
-	@echo "\tSources          : " $(SRCDIR)
-	@echo "\tObjects          : " $(OBJDIR)
-	@echo "\tBin              : " $(BINDIR)
+	@echo "\tSources        : " $(SRCDIR)
+	@echo "\tIncludes       : " $(INCDIR)
+	@echo "\tObjects        : " $(OBJDIR)
+	@echo "\tBin            : " $(BINDIR)
 	@echo
 	@echo "Files"
-	@echo "\tSources          : " $(SRCS)
-	@echo "\tObjects          : " $(OBJS)
-	@echo "\tExecutable       : " $(TARGET)
+	@echo "\tSources        : " $(SRCS)
+	@echo "\tObjects        : " $(OBJS)
+	@echo "\tExecutable     : " $(TARGET)
 	@echo
 	@echo "Installer"
-	@echo "\tFolder           : " $(INSTALLDIR)
+	@echo "\tFolder         : " $(INSTALLDIR)
 	@echo
-
-
+	@echo "Depends"
+	@echo "\tLibs           : " $(LDLIBS)
+	@echo

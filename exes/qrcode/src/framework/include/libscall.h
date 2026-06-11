@@ -5,15 +5,15 @@
 #define NULL 0x00;
 #endif
 
+#include "libs/log.h"
 #include "libs/qrcode.h"
-#include "libs/vio.h"
 
 #ifdef MAIN_C
 QRCODE *qrcode = NULL;
-VIO *vio = NULL;
+LOG *logger = NULL;
 #else
 extern QRCODE *qrcode;
-extern VIO *vio;
+extern LOG *logger;
 #endif
 
 #endif

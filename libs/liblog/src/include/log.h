@@ -1,5 +1,5 @@
-#ifndef VIO_H
-#define VIO_H
+#ifndef LOG_H
+#define LOG_H
 
 typedef void (*fn)(int, char *);
 
@@ -10,14 +10,14 @@ typedef void (*fn_loggerAddListener)(fn _fn);
 
 typedef struct {
 
-    fn_logger logger;
-    fn_loggerCreate loggerCreate;
-    fn_loggerDelete loggerDelete;
-    fn_loggerAddListener loggerAddListener;
+    fn_logger Write;
+    fn_loggerCreate Instance;
+    fn_loggerDelete Release;
+    fn_loggerAddListener AddListener;
 
-} VIO;
+} LOG;
 
-VIO *vio_init();
-void vio_release(VIO **);
+LOG *log_init();
+void log_release(LOG **);
 
 #endif
