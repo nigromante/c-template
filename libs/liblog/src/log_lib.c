@@ -9,14 +9,15 @@ PUBLIC LOG *log_init() {
     LOG *qrcodePtr = (LOG *)malloc(sizeof(LOG));
 
     qrcodePtr->Write = &log_Write;
-    qrcodePtr->Instance = &log_Instance;
-    qrcodePtr->Release = &log_Release;
     qrcodePtr->AddListener = &log_AddListener;
 
+    log_Instance();
     return qrcodePtr;
 }
 
 PUBLIC void log_release(LOG **ptr) {
+    log_Release();
+
     free(*ptr);
     ptr = NULL;
 }
