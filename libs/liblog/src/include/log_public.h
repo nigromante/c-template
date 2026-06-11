@@ -17,6 +17,6 @@ tLogger *logger;
 void log_Write(int, char *format, ...);
 void log_Instance();
 void log_Release();
-void log_AddListener(fn _fn);
+void log_AddListener(fn _fn, int flag);
 
 #endif

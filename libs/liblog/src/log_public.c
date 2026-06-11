@@ -16,7 +16,7 @@ void log_Release() {
     logger = 0x00;
 }
 
-void log_AddListener(fn _fn) {
+void log_AddListener(fn _fn, int flag) {
     logger->lista[logger->total++] = _fn;
     return;
 }

@@ -49,8 +49,4 @@ void load_env(const char *filename) {
     fclose(file);
 }
 
-void env_init() {
-    load_env(".env");
-    env.stdout = atoi(getenv("stdout"));
-    env.mailer = atoi(getenv("mailer"));
-}
+void env_init() { load_env(".env"); }

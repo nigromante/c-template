@@ -3,13 +3,10 @@
 
 typedef void (*fn)(int, char *);
 
-typedef void (*fn_logger)(int, char *, ...);
-typedef void (*fn_AddListener)(fn _fn);
-
 typedef struct {
 
-    fn_logger Write;
-    fn_AddListener AddListener;
+    void (*Write)(int, char *, ...);
+    void (*AddListener)(fn _fn, int);
 
 } LOG;
 
