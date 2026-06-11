@@ -30,7 +30,7 @@ CC = gcc
 
 CFLAGS = -Wall -g
 LDFLAGS = -L$(TESTDIR)
-LDLIBS = -lqrcode -llog
+LDLIBS = -lqrcode -llog -lvio
 
 DEPSFLAGS = -MMD -MP -MF $(SRCDIR)/$*.d 
 

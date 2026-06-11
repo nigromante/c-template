@@ -6,22 +6,7 @@
 #define VIO_PUBLIC_C
 #include "include/vio_public.h"
 
-void vio_loggerCreate() {
-    logger = (tLogger *)malloc(sizeof(tLogger));
-    memset(logger, 0x00, sizeof(tLogger));
-}
-
-void vio_loggerDelete() {
-    free(logger);
-    logger = 0x00;
-}
-
-void vio_loggerAddListener(fn _fn) {
-    logger->lista[logger->total++] = _fn;
-    return;
-}
-
-void vio_logger(int level, char *format, ...) {
+void vio_print(int level, char *format, ...) {
     char buffer[256];
     va_list args;
 
@@ -29,7 +14,5 @@ void vio_logger(int level, char *format, ...) {
     vsprintf(buffer, format, args);
     va_end(args);
 
-    for (int i = 0; i < logger->total; i++) {
-        logger->lista[i](level, buffer);
-    }
+    printf("vio_print :: %d :: %s\n", level, buffer);
 }

@@ -7,6 +7,8 @@ void loader_init() {
 
     logger = log_init();
     logger->Instance();
+
+    vio = vio_init();
 }
 
 void loader_end() {
@@ -14,4 +16,6 @@ void loader_end() {
 
     logger->Release();
     log_release(&logger);
+
+    vio_release(&vio);
 }

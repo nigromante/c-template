@@ -20,5 +20,7 @@ int pmain(int argc, char **argv) {
 
     logger->Write(LOG_ERROR, "Nombre : [%s] ", "Julian Vidal A.");
 
+    vio->print(123, "[%s]", "test");
+
     return 0;
 }

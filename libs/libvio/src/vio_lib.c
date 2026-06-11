@@ -8,10 +8,7 @@ PUBLIC VIO *vio_init() {
 
     VIO *qrcodePtr = (VIO *)malloc(sizeof(VIO));
 
-    qrcodePtr->logger = &vio_logger;
-    qrcodePtr->loggerCreate = &vio_loggerCreate;
-    qrcodePtr->loggerDelete = &vio_loggerDelete;
-    qrcodePtr->loggerAddListener = &vio_loggerAddListener;
+    qrcodePtr->print = &vio_print;
 
     return qrcodePtr;
 }

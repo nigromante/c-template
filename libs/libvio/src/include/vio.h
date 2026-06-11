@@ -1,19 +1,11 @@
 #ifndef VIO_H
 #define VIO_H
 
-typedef void (*fn)(int, char *);
-
-typedef void (*fn_logger)(int, char *, ...);
-typedef void (*fn_loggerCreate)();
-typedef void (*fn_loggerDelete)();
-typedef void (*fn_loggerAddListener)(fn _fn);
+typedef void (*fn_print)(int, char *, ...);
 
 typedef struct {
 
-    fn_logger logger;
-    fn_loggerCreate loggerCreate;
-    fn_loggerDelete loggerDelete;
-    fn_loggerAddListener loggerAddListener;
+    fn_print print;
 
 } VIO;
 
