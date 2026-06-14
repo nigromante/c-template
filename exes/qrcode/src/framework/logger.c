@@ -11,7 +11,7 @@ void logger_init() {
 
 void log_stdout(int level, char *buffer) {
     if (log_env.stdout & level) {
-        printf("\n log_stdout :: (%d) %s\n", level, buffer);
+        printf("(%d) | %s\n", level, buffer);
     }
 }
 

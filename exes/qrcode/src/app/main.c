@@ -2,7 +2,7 @@
 #define MAIN_C
 #include "../framework/include/libscall.h"
 
-int main(int argc, char **argv) {
+void initialize() {
 
     env_init();
 
@@ -10,11 +10,17 @@ int main(int argc, char **argv) {
 
     logger->AddListener(log_stdout, log_env.stdout);
     logger->AddListener(log_mailer, log_env.mailer);
+}
+
+int main(int argc, char **argv) {
+
+    initialize();
 
     qrcode->version();
     qrcode->show("Julian Vidal Alarcon");
 
-    logger->Error("Nombre : [%s] ", "Julian Vidal A.");
+    logger->Info("Program : [%s] ", "qrcode");
+    logger->Error("Nombre  : [%s] ", "Julian Vidal A.");
 
     vio->print(123, "[%s]", "test");
 
