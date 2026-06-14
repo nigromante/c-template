@@ -45,6 +45,7 @@ void load_env(const char *filename) {
         snprintf(env_string, env_len, "%s=%s", key, value);
 
         putenv(env_string);
+        free(env_string);
     }
     fclose(file);
 }
