@@ -71,10 +71,10 @@ build: $(TARGET)
 all:  clean build install
 
 run:
-	@./test.sh $(TESTDIR)  $(TARGET)
+	@./test.sh $(TESTDIR)  gdb $(TARGET)
 
 debug:
-	@./test.sh $(TESTDIR)  gdb $(TARGET)
+	@./test.sh $(TESTDIR)  $(TARGET)
 	#gdb  $(TARGET)
 
 install:
