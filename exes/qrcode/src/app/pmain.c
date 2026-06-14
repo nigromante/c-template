@@ -1,13 +1,11 @@
 #include <stdio.h>
+#define PMAIN_C
 
 #include "../framework/include/libscall.h"
-
-#define PMAIN_C
 #include "include/env.h"
 #include "include/logger.h"
-// #include "include/pmain.h"
 
-int pmain(int argc, char **argv) {
+int main(int argc, char **argv) {
 
     env_init();
 
