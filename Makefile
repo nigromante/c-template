@@ -19,7 +19,7 @@ all:
 clean:
 	$(foreach dir, $(EXEDIR) , $(MAKE) clean -C $(dir); )
 	@echo -n "\t${YELLOW}"
-	rm -f ./test/bin/* ./test/libs/include/* ./test/libs/*.so
+	rm -f ./test/bin/* ./test/libs/include/* ./test/libs/*.so analisis
 	@echo -n "${RESET}"
 
 .phony run:

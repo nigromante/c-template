@@ -8,10 +8,10 @@ typedef void (*fn)(int, char *);
 typedef struct {
     fn lista[N];
     int total;
-} tLogger;
+} TLOGGER;
 
 #ifdef LOG_PUBLIC_C
-tLogger *logger;
+TLOGGER *logger;
 #endif
 
 void log_Write(int, char *format, ...);

@@ -7,8 +7,8 @@
 #include "include/log_public.h"
 
 void log_Instance() {
-    logger = (tLogger *)malloc(sizeof(tLogger));
-    memset(logger, 0x00, sizeof(tLogger));
+    logger = (TLOGGER *)malloc(sizeof(TLOGGER));
+    memset(logger, 0x00, sizeof(TLOGGER));
 }
 
 void log_Release() {
@@ -17,16 +17,18 @@ void log_Release() {
 }
 
 void log_AddListener(fn _fn, int flag) {
-    logger->lista[logger->total++] = _fn;
+    if (flag) {
+        logger->lista[logger->total++] = _fn;
+    }
     return;
 }
 
 void log_Write(int level, char *format, ...) {
-    char buffer[256];
+    char buffer[1024];
     va_list args;
 
     va_start(args, format);
-    vsprintf(buffer, format, args);
+    vsnprintf(buffer, sizeof(buffer), format, args);
     va_end(args);
 
     for (int i = 0; i < logger->total; i++) {

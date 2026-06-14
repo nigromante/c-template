@@ -9,14 +9,14 @@ void logger_init() {
     log_env.mailer = atoi(getenv("mailer"));
 }
 
-void log_void() {}
-
 void log_stdout(int level, char *buffer) {
-    log_env.stdout &level ? printf("\n log_stdout :: %s\n", buffer) : log_void();
-    return;
+    if (log_env.stdout & level) {
+        printf("\n log_stdout :: %s\n", buffer);
+    }
 }
 
 void log_mailer(int level, char *buffer) {
-    log_env.mailer &level ? printf("\n log_mailer :: %s\n", buffer) : log_void();
-    return;
+    if (log_env.mailer & level) {
+        printf("\n log_mailer :: %s\n", buffer);
+    }
 }

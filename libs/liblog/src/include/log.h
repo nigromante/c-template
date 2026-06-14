@@ -13,4 +13,8 @@ typedef struct {
 LOG *log_init();
 void log_release(LOG **);
 
+#define LOG_DEBUG 1
+#define LOG_WARNING 2
+#define LOG_ERROR 4
+
 #endif
