@@ -2,9 +2,6 @@
 #define MAIN_C
 #include "../framework/include/libscall.h"
 
-#include "include/env.h"
-#include "include/logger.h"
-
 int main(int argc, char **argv) {
 
     env_init();
@@ -17,7 +14,7 @@ int main(int argc, char **argv) {
     qrcode->version();
     qrcode->show("Julian Vidal Alarcon");
 
-    logger->Write(LOG_ERROR, "Nombre : [%s] ", "Julian Vidal A.");
+    logger->Error("Nombre : [%s] ", "Julian Vidal A.");
 
     vio->print(123, "[%s]", "test");
 

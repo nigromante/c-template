@@ -23,4 +23,6 @@ extern VIO *vio;
 
 #endif
 
+#include "env.h"
+#include "logger.h"
 #endif

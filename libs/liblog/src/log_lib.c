@@ -9,6 +9,12 @@ PUBLIC LOG *log_init() {
     LOG *qrcodePtr = (LOG *)malloc(sizeof(LOG));
 
     qrcodePtr->Write = &log_Write;
+
+    qrcodePtr->Info = &log_Info;
+    qrcodePtr->Debug = &log_Debug;
+    qrcodePtr->Warning = &log_Warning;
+    qrcodePtr->Error = &log_Error;
+
     qrcodePtr->AddListener = &log_AddListener;
 
     log_Instance();

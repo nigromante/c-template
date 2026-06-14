@@ -14,9 +14,15 @@ typedef struct {
 TLOGGER *logger;
 #endif
 
-void log_Write(int, char *format, ...);
 void log_Instance();
 void log_Release();
 void log_AddListener(fn _fn, int flag);
+
+void log_Debug(char *format, ...);
+void log_Info(char *format, ...);
+void log_Warning(char *format, ...);
+void log_Error(char *format, ...);
+
+void log_Write(int, char *format, ...);
 
 #endif
