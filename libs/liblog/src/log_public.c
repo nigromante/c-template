@@ -24,67 +24,40 @@ void log_AddListener(fn _fn, int flag) {
     return;
 }
 
-void log_Write(int level, char *format, ...) {
+void log_Write(int level, char *format, va_list args) {
     char buffer[1024];
-    va_list args;
 
-    va_start(args, format);
     vsnprintf(buffer, sizeof(buffer), format, args);
-    va_end(args);
 
     for (int i = 0; i < logger->total; i++) {
         logger->lista[i](level, buffer);
     }
 }
 
-void log_Info(char *format, ...) {
-    char buffer[1024];
+void log_Info(char *fmt, ...) {
     va_list args;
-
-    va_start(args, format);
-    vsnprintf(buffer, sizeof(buffer), format, args);
+    va_start(args, fmt);
+    log_Write(LOG_INFO, fmt, args);
     va_end(args);
-
-    for (int i = 0; i < logger->total; i++) {
-        logger->lista[i](LOG_INFO, buffer);
-    }
 }
 
-void log_Debug(char *format, ...) {
-    char buffer[1024];
+void log_Debug(char *fmt, ...) {
     va_list args;
-
-    va_start(args, format);
-    vsnprintf(buffer, sizeof(buffer), format, args);
+    va_start(args, fmt);
+    log_Write(LOG_DEBUG, fmt, args);
     va_end(args);
-
-    for (int i = 0; i < logger->total; i++) {
-        logger->lista[i](LOG_DEBUG, buffer);
-    }
 }
 
-void log_Warning(char *format, ...) {
-    char buffer[1024];
+void log_Warning(char *fmt, ...) {
     va_list args;
-
-    va_start(args, format);
-    vsnprintf(buffer, sizeof(buffer), format, args);
+    va_start(args, fmt);
+    log_Write(LOG_WARNING, fmt, args);
     va_end(args);
-
-    for (int i = 0; i < logger->total; i++) {
-        logger->lista[i](LOG_WARNING, buffer);
-    }
 }
 
-void log_Error(char *format, ...) {
-    char buffer[1024];
+void log_Error(char *fmt, ...) {
     va_list args;
-
-    va_start(args, format);
-    vsnprintf(buffer, sizeof(buffer), format, args);
+    va_start(args, fmt);
+    log_Write(LOG_ERROR, fmt, args);
     va_end(args);
-
-    for (int i = 0; i < logger->total; i++) {
-        logger->lista[i](LOG_ERROR, buffer);
-    }
 }

@@ -5,7 +5,6 @@ typedef void (*fn)(int, char *);
 
 typedef struct {
 
-    void (*Write)(int, char *, ...);
     void (*Info)(char *, ...);
     void (*Debug)(char *, ...);
     void (*Warning)(char *, ...);

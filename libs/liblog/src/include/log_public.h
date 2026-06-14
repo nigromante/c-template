@@ -23,6 +23,4 @@ void log_Info(char *format, ...);
 void log_Warning(char *format, ...);
 void log_Error(char *format, ...);
 
-void log_Write(int, char *format, ...);
-
 #endif
