@@ -1,5 +1,5 @@
 #include <stdio.h>
-#define PMAIN_C
+#define MAIN_C
 
 #include "../framework/include/libscall.h"
 #include "include/env.h"
