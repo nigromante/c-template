@@ -24,10 +24,7 @@ void log_AddListener(fn _fn, int flag) {
     return;
 }
 
-void log_Write(int level, char *format, va_list args) {
-    char buffer[1024];
-
-    vsnprintf(buffer, sizeof(buffer), format, args);
+void log_Write(int level, char *buffer) {
 
     for (int i = 0; i < logger->total; i++) {
         logger->lista[i](level, buffer);

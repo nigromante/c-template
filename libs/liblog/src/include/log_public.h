@@ -25,9 +25,11 @@ void log_Error(char *format, ...);
 
 #define _LOG_WRITE_(a, b)                                                                                                                                                                              \
     do {                                                                                                                                                                                               \
+        char buffer[1024];                                                                                                                                                                             \
         va_list args;                                                                                                                                                                                  \
         va_start(args, (b));                                                                                                                                                                           \
-        log_Write((a), (b), args);                                                                                                                                                                     \
+        vsnprintf(buffer, sizeof(buffer), (b), args);                                                                                                                                                  \
+        log_Write((a), buffer);                                                                                                                                                                        \
         va_end(args);                                                                                                                                                                                  \
     } while (0);
 #endif
