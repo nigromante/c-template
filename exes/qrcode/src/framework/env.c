@@ -32,5 +32,3 @@ void load_env(const char *filename) {
     }
     fclose(file);
 }
-
-void env_init() { load_env(".env"); }

@@ -4,7 +4,7 @@
 
 void initialize() {
 
-    env_init();
+    load_env(".env");
 
     logger_init();
 
