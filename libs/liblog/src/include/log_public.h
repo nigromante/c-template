@@ -23,6 +23,8 @@ void log_Info(char *format, ...);
 void log_Warning(char *format, ...);
 void log_Error(char *format, ...);
 
+void log_Send();
+
 #define _LOG_WRITE_(a, b)                                                                                                                                                                              \
     do {                                                                                                                                                                                               \
         char buffer[1024];                                                                                                                                                                             \

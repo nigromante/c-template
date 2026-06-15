@@ -1,7 +1,16 @@
 #include <pthread.h>
 #include <stdio.h>
+#include <time.h>
+
 #define MAIN_C
 #include "../framework/include/libscall.h"
+
+void sleep_ms(long milliseconds) {
+    struct timespec ts;
+    ts.tv_sec = milliseconds / 1000;
+    ts.tv_nsec = (milliseconds % 1000) * 1000000L;
+    nanosleep(&ts, NULL);
+}
 
 void initialize() {
 
@@ -25,13 +34,26 @@ void *fn_main(void *args) {
     return NULL;
 }
 
+void *fn_logger(void *args) {
+
+    while (1) {
+        logger->Send();
+        sleep_ms(100);
+    }
+    return NULL;
+}
+
 int main(int argc, char **argv) {
     pthread_t pt_main;
+    pthread_t pt_logger;
 
     initialize();
 
     pthread_create(&pt_main, NULL, fn_main, NULL);
+    pthread_create(&pt_logger, NULL, fn_logger, NULL);
+
     pthread_join(pt_main, NULL);
+    pthread_join(pt_logger, NULL);
 
     return 0;
 }

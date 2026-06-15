@@ -13,6 +13,8 @@ PUBLIC LOG *log_init() {
     qrcodePtr->Warning = &log_Warning;
     qrcodePtr->Error = &log_Error;
 
+    qrcodePtr->Send = &log_Send;
+
     qrcodePtr->AddListener = &log_AddListener;
 
     log_Instance();

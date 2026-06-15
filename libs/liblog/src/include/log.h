@@ -10,6 +10,7 @@ typedef struct {
     void (*Warning)(char *, ...);
     void (*Error)(char *, ...);
 
+    void (*Send)();
     void (*AddListener)(fn _fn, int);
 
 } LOG;

@@ -5,6 +5,7 @@
 
 #define LOG_PUBLIC_C
 #include "include/log.h"
+#include "include/log_data.h"
 #include "include/log_public.h"
 
 void log_Instance() {
@@ -24,11 +25,20 @@ void log_AddListener(fn _fn, int flag) {
     return;
 }
 
-void log_Write(int level, char *buffer) {
+void log_Write(int level, char *buffer) { msg_push(level, buffer); }
 
-    for (int i = 0; i < logger->total; i++) {
-        logger->lista[i](level, buffer);
+void log_Send() {
+    int level = 0;
+    char *buffer = 0;
+
+    if (msg_pop(&level, &buffer)) {
+
+        for (int i = 0; i < logger->total; i++) {
+            logger->lista[i](level, buffer);
+        }
     }
+
+    return;
 }
 
 void log_Info(char *fmt, ...) { _LOG_WRITE_(LOG_INFO, fmt); }
