@@ -18,7 +18,7 @@ void *fn_main(void *args) {
     qrcode->show("Julian Vidal Alarcon");
 
     logger->Info("Program : [%s] ", "qrcode");
-    logger->Error("Nombre  : [%s] ", "Julian Vidal A.");
+    logger->Error("Nombre ERROR : [%s] ", "Julian Vidal A.");
 
     vio->print(123, "[%s]", "test");
 

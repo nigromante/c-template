@@ -34,30 +34,10 @@ void log_Write(int level, char *format, va_list args) {
     }
 }
 
-void log_Info(char *fmt, ...) {
-    va_list args;
-    va_start(args, fmt);
-    log_Write(LOG_INFO, fmt, args);
-    va_end(args);
-}
+void log_Info(char *fmt, ...) { _LOG_WRITE_(LOG_INFO, fmt); }
 
-void log_Debug(char *fmt, ...) {
-    va_list args;
-    va_start(args, fmt);
-    log_Write(LOG_DEBUG, fmt, args);
-    va_end(args);
-}
+void log_Debug(char *fmt, ...) { _LOG_WRITE_(LOG_DEBUG, fmt); }
 
-void log_Warning(char *fmt, ...) {
-    va_list args;
-    va_start(args, fmt);
-    log_Write(LOG_WARNING, fmt, args);
-    va_end(args);
-}
+void log_Warning(char *fmt, ...) { _LOG_WRITE_(LOG_WARNING, fmt); }
 
-void log_Error(char *fmt, ...) {
-    va_list args;
-    va_start(args, fmt);
-    log_Write(LOG_ERROR, fmt, args);
-    va_end(args);
-}
+void log_Error(char *fmt, ...) { _LOG_WRITE_(LOG_ERROR, fmt); }

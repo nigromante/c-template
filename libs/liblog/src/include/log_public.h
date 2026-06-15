@@ -23,4 +23,11 @@ void log_Info(char *format, ...);
 void log_Warning(char *format, ...);
 void log_Error(char *format, ...);
 
+#define _LOG_WRITE_(a, b)                                                                                                                                                                              \
+    do {                                                                                                                                                                                               \
+        va_list args;                                                                                                                                                                                  \
+        va_start(args, (b));                                                                                                                                                                           \
+        log_Write((a), (b), args);                                                                                                                                                                     \
+        va_end(args);                                                                                                                                                                                  \
+    } while (0);
 #endif
