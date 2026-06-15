@@ -1,3 +1,4 @@
+#include <pthread.h>
 #include <stdio.h>
 #define MAIN_C
 #include "../framework/include/libscall.h"
@@ -12,10 +13,7 @@ void initialize() {
     logger->AddListener(log_mailer, log_env.mailer);
 }
 
-int main(int argc, char **argv) {
-
-    initialize();
-
+void *fn_main(void *args) {
     qrcode->version();
     qrcode->show("Julian Vidal Alarcon");
 
@@ -24,5 +22,18 @@ int main(int argc, char **argv) {
 
     vio->print(123, "[%s]", "test");
 
+    return NULL;
+}
+
+int main(int argc, char **argv) {
+    pthread_t pt_main;
+
+    initialize();
+
+    pthread_create(&pt_main, NULL, fn_main, NULL);
+    pthread_join(pt_main, NULL);
+
     return 0;
 }
+
+// eof
