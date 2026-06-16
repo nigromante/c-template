@@ -24,5 +24,5 @@ clean:
 
 .phony run:
 run:
-	 @bash ./test/run.sh ./test/bin/qrcode
+	 @bash ./test/run.sh ./test/bin/qrcode 'Julian_Enrique_Vidal_Alarcon'
 
