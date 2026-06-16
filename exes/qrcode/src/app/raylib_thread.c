@@ -1,12 +1,11 @@
+#define RAYLIB_THREAD_C
+#include "include/raylib_thread.h"
 #include "raylib.h"
 #include <pthread.h>
-#include <stdio.h>
 
 #include "../framework/include/libscall.h"
 
 #define TEXTO "Julian Vidal Alarcon"
-
-int ff_raylib = 2;
 
 void fn_callback(int sx, int sy, int x, int y, int flag) {
     if (flag) {
@@ -17,6 +16,7 @@ void DrawQR(char *buffer, int x, int y) { qrcode->callback(x, y, buffer, fn_call
 
 void *fn_raylib(void *args) {
 
+    logger->Info("DrawQR [%s] ", TEXTO);
     qrcode->show(TEXTO);
 
     SetTraceLogLevel(LOG_NONE);

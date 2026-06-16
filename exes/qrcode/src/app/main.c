@@ -1,14 +1,11 @@
 #include <pthread.h>
 #include <stdio.h>
 
+#include "include/raylib_thread.h"
 #define MAIN_C
 #include "../framework/include/libscall.h"
 
-#define TEXTO "Julian Vidal Alarcon"
-
 int ff_main = 1;
-extern int ff_raylib;
-void *fn_raylib(void *args);
 
 void initialize() {
 
@@ -27,7 +24,7 @@ void *fn_main(void *args) {
     logger->Info("Program : [%s] ", "qrcode");
     logger->Error("Nombre ERROR : [%s] ", "Julian Vidal A.");
 
-    getchar();
+    // getchar();
     ff_main = 0;
 
     pthread_exit(NULL);
