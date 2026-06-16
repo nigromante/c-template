@@ -24,19 +24,21 @@ void fn_callback(int sx, int sy, int x, int y, int flag) {
     }
 }
 void DrawQR(char *buffer, int x, int y) {
-    qrcode->show(buffer);
+    // qrcode->show(buffer);
     qrcode->callback(x, y, buffer, fn_callback);
 }
 
 void *fn_raylib(void *args) {
     logger->Info("Program : [%s] ", "qrcode");
-
+    SetTraceLogLevel(LOG_NONE);
     InitWindow(800, 450, "QR Code");
 
     while (!WindowShouldClose()) {
         BeginDrawing();
 
         ClearBackground(RAYWHITE);
+        Texture2D background = LoadTexture("background.png");
+        DrawTexture(background, 0, 0, WHITE);
         DrawText("Julian Vidal Alarcon", 40, 70, 20, RED);
         DrawQR("Julian Vidal Alarcon", 40, 100);
 

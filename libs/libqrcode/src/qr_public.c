@@ -36,15 +36,10 @@ int qrcallback(int sx, int sy, char *text, void (*p)(int, int, int, int, int)) {
         return 1;
     }
 
-    // Example: Iterate through the modules and print to console
     for (int y = 0; y < qrcode->width; y++) {
         for (int x = 0; x < qrcode->width; x++) {
-            // Check the LSB of the data to see if the module is dark
-            if (qrcode->data[y * qrcode->width + x] & 1) {
-                p(sx, sy, x, y, (qrcode->data[y * qrcode->width + x] & 1));
-            }
+            p(sx, sy, x, y, (qrcode->data[y * qrcode->width + x] & 1));
         }
-        printf("\n");
     }
 
     QRcode_free(qrcode);
