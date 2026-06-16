@@ -10,6 +10,7 @@ PUBLIC QRCODE *qrcode_init() {
 
     qrcodePtr->show = &qrshow;
     qrcodePtr->version = &qrversion;
+    qrcodePtr->callback = &qrcallback;
 
     return qrcodePtr;
 }

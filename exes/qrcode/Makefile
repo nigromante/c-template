@@ -33,7 +33,7 @@ DEPSFLAGS = -MMD -MP -MF $(SRCDIR)/$*.d
 # Linker flags
 LD = gcc
 LDFLAGS = -L$(TESTDIR)
-LDLIBS = -lpthread  -lm -ldl -lrt -lX11
+LDLIBS = -lpthread  -lm -ldl -lrt -lX11 -lraylib -lGL
 LDLIBSOWN = -lqrcode -llog -lvio 
 
 

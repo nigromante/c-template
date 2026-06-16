@@ -28,3 +28,25 @@ int qrshow(char *text) {
     QRcode_free(qrcode);
     return 0;
 }
+
+int qrcallback(int sx, int sy, char *text, void (*p)(int, int, int, int, int)) {
+    QRcode *qrcode = QRcode_encodeString(text, 0, QR_ECLEVEL_L, QR_MODE_8, 1);
+    if (qrcode == NULL) {
+        printf("Failed to generate QR code\n");
+        return 1;
+    }
+
+    // Example: Iterate through the modules and print to console
+    for (int y = 0; y < qrcode->width; y++) {
+        for (int x = 0; x < qrcode->width; x++) {
+            // Check the LSB of the data to see if the module is dark
+            if (qrcode->data[y * qrcode->width + x] & 1) {
+                p(sx, sy, x, y, (qrcode->data[y * qrcode->width + x] & 1));
+            }
+        }
+        printf("\n");
+    }
+
+    QRcode_free(qrcode);
+    return 0;
+}
