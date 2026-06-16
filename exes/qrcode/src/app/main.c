@@ -1,12 +1,14 @@
-#include "raylib.h"
 #include <pthread.h>
 #include <stdio.h>
 
 #define MAIN_C
 #include "../framework/include/libscall.h"
 
+#define TEXTO "Julian Vidal Alarcon"
+
 int ff_main = 1;
-int ff_raylib = 2;
+extern int ff_raylib;
+void *fn_raylib(void *args);
 
 void initialize() {
 
@@ -18,47 +20,12 @@ void initialize() {
     logger->AddListener(log_mailer, log_env.mailer);
 }
 
-void fn_callback(int sx, int sy, int x, int y, int flag) {
-    if (flag) {
-        DrawRectangle(sx + x * 10, sy + y * 10, 10, 10, RED);
-    }
-}
-void DrawQR(char *buffer, int x, int y) {
-    // qrcode->show(buffer);
-    qrcode->callback(x, y, buffer, fn_callback);
-}
-
-void *fn_raylib(void *args) {
-    logger->Info("Program : [%s] ", "qrcode");
-    SetTraceLogLevel(LOG_NONE);
-    InitWindow(800, 450, "QR Code");
-
-    while (!WindowShouldClose()) {
-        BeginDrawing();
-
-        ClearBackground(RAYWHITE);
-        Texture2D background = LoadTexture("background.png");
-        DrawTexture(background, 0, 0, WHITE);
-        DrawText("Julian Vidal Alarcon", 40, 70, 20, RED);
-        DrawQR("Julian Vidal Alarcon", 40, 100);
-
-        EndDrawing();
-    }
-
-    CloseWindow();
-
-    ff_raylib = 0;
-    pthread_exit(NULL);
-}
-
 void *fn_main(void *args) {
 
-    printf("[ENTER] to finish program ...\n");
+    vio->print("[ENTER] to finish program ...");
 
     logger->Info("Program : [%s] ", "qrcode");
     logger->Error("Nombre ERROR : [%s] ", "Julian Vidal A.");
-
-    vio->print(123, "[%s]", "test");
 
     getchar();
     ff_main = 0;
@@ -91,6 +58,7 @@ int main(int argc, char **argv) {
     pthread_join(pt_logger, NULL);
     pthread_join(pt_raylib, NULL);
 
+    printf("\n");
     return 0;
 }
 

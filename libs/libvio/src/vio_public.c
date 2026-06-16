@@ -6,7 +6,7 @@
 #define VIO_PUBLIC_C
 #include "include/vio_public.h"
 
-void vio_print(int level, char *format, ...) {
+void vio_print(char *format, ...) {
     char buffer[256];
     va_list args;
 
@@ -14,5 +14,5 @@ void vio_print(int level, char *format, ...) {
     vsprintf(buffer, format, args);
     va_end(args);
 
-    printf("vio_print :: %d :: %s\n", level, buffer);
+    printf("vio_print ::  %s\n", buffer);
 }

@@ -3,7 +3,7 @@
 
 typedef struct {
 
-    void (*print)(int, char *, ...);
+    void (*print)(char *, ...);
 
 } VIO;
 

@@ -11,12 +11,12 @@ void logger_init() {
 
 void log_stdout(int level, char *buffer) {
     if (log_env.stdout & level) {
-        printf("(%d) | %s\n", level, buffer);
+        printf("\n(%d) | %s", level, buffer);
     }
 }
 
 void log_mailer(int level, char *buffer) {
     if (log_env.mailer & level) {
-        printf("\n log_mailer :: %s\n", buffer);
+        printf("\nlog_mailer :: %s", buffer);
     }
 }
