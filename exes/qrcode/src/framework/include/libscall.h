@@ -24,6 +24,6 @@ extern VIO *vio;
 #endif
 
 #include "env.h"
-#include "logger.h"
+#include "logger_impl.h"
 #include "sys.h"
 #endif

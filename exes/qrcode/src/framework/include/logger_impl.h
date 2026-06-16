@@ -1,12 +1,12 @@
-#ifndef LOGGER_H
-#define LOGGER_H
+#ifndef LOGGER_IMPL_H
+#define LOGGER_IMPL_H
 
 typedef struct {
     int stdout;
     int mailer;
 } LOG_ENV;
 
-#ifdef LOGGER_C
+#ifdef LOGGER_IMPL_C
 
 LOG_ENV log_env;
 

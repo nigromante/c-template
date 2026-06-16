@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define LOGGER_C
-#include "include/logger.h"
+#define LOGGER_IMPL_C
+#include "include/logger_impl.h"
 
 void logger_init() {
     log_env.stdout = atoi(getenv("stdout"));
