@@ -1,5 +1,5 @@
-#ifndef TERMINALTHREAD_H
-#define TERMINALTHREAD_H
+#ifndef TERMINAL_THREAD_H
+#define TERMINAL_THREAD_H
 
 #ifdef TERMINAL_THREAD_C
 int ff_terminal = 1;

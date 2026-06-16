@@ -1,9 +1,10 @@
 #include <pthread.h>
 #include <stdio.h>
+#include <string.h>
 
-#include "include/logger_thread.h"
-#include "include/raylib_thread.h"
-#include "include/terminal_thread.h"
+#include "include/thread_logger.h"
+#include "include/thread_raylib.h"
+#include "include/thread_terminal.h"
 
 #define MAIN_C
 #include "../framework/include/libscall.h"
@@ -17,16 +18,25 @@ void initialize() {
     logger->AddListener(log_stdout, log_env.stdout);
     logger->AddListener(log_mailer, log_env.mailer);
 }
+void replace_char(char *str, char find, char replace) {
+    while ((str = strchr(str, find)) != NULL) {
+        *str = replace;
+        str++; // Move to next character to prevent an infinite loop
+    }
+}
 
 int main(int argc, char **argv) {
     pthread_t pt_main;
     pthread_t pt_raylib;
     pthread_t pt_logger;
 
+    vio->print("argv1 : [%s] ", argv[1]);
+
     initialize();
 
-    char texto[] = "Julian Enrique Vidal Alarcon";
-    vio->print("argv1 : [%s] ", argv[1]);
+    char texto[256];
+    strcpy(texto, argv[1]);
+    replace_char(texto, '_', ' ');
 
     pthread_create(&pt_logger, NULL, fn_logger, NULL);
     pthread_create(&pt_main, NULL, fn_terminal, NULL);

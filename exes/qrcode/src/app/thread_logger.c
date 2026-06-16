@@ -1,7 +1,7 @@
 #define LOGGER_THREAD_C
-#include "include/logger_thread.h"
-#include "include/raylib_thread.h"
-#include "include/terminal_thread.h"
+#include "include/thread_logger.h"
+#include "include/thread_raylib.h"
+#include "include/thread_terminal.h"
 
 #include "../framework/include/libscall.h"
 #include <pthread.h>
