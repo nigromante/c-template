@@ -25,21 +25,28 @@ OBJS = $(subst $(SRCDIR),$(OBJDIR), $(OBJS_TMP))
 TARGET = $(BINDIR)/$(EXE)
 INCLUDE = -I include -I $(TESTDIR)/include
 
-# Compiler-Linker flags
+# Compiler flags
 CC = gcc
-
 CFLAGS = -Wall -g
-LDFLAGS = -L$(TESTDIR)
-LDLIBS = -lqrcode -llog -lvio -lpthread
-
 DEPSFLAGS = -MMD -MP -MF $(SRCDIR)/$*.d 
+
+# Linker flags
+LD = gcc
+LDFLAGS = -L$(TESTDIR)
+LDLIBS = -lpthread  -lm -ldl -lrt -lX11
+LDLIBSOWN = -lqrcode -llog -lvio 
+
+
+.PHONY: all
+all:  clean build install
+
 
 # Link
 $(TARGET): $(OBJS) | $(BINDIR)
 	$(info  )
 	$(info Linking ... )
 	@echo -n "\t${YELLOW}"  
-	$(CC) $(OBJS) -o $(TARGET) $(LDFLAGS) $(LDLIBS)
+	$(LD) $(OBJS) -o $(TARGET) $(LDFLAGS) $(LDLIBS) $(LDLIBSOWN)
 	@echo -n "${RESET}"  
 
 $(BINDIR):
@@ -66,17 +73,20 @@ clean:
 	rm -rf $(OBJDIR) $(BINDIR) $(DEPS)
 	@echo "${RESET}"
 
+.PHONY: build
 build: $(TARGET)
 
-all:  clean build install
 
+.PHONY: run
 run:
 	@./test.sh $(TESTDIR)  $(TARGET)
 
+.PHONY: debug
 debug:
 	@./test.sh $(TESTDIR)  $(TARGET)
 	#gdb  $(TARGET)
 
+.PHONY: install
 install:
 	$(info  )
 	$(info Installing ... )
@@ -84,6 +94,7 @@ install:
 	cp -f $(TARGET)  $(INSTALLDIR)
 	@echo "${RESET}"
 
+.PHONY: help
 help:
 	@echo  "Aliases"
 	@echo  "\talias mk='make'"

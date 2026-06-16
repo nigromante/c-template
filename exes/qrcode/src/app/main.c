@@ -1,16 +1,10 @@
 #include <pthread.h>
 #include <stdio.h>
-#include <time.h>
 
 #define MAIN_C
 #include "../framework/include/libscall.h"
 
-void sleep_ms(long milliseconds) {
-    struct timespec ts;
-    ts.tv_sec = milliseconds / 1000;
-    ts.tv_nsec = (milliseconds % 1000) * 1000000L;
-    nanosleep(&ts, NULL);
-}
+int ff_main = 1;
 
 void initialize() {
 
@@ -23,6 +17,9 @@ void initialize() {
 }
 
 void *fn_main(void *args) {
+
+    printf("[ENTER] to finish program ...\n");
+
     qrcode->version();
     qrcode->show("Julian Vidal Alarcon");
 
@@ -31,16 +28,20 @@ void *fn_main(void *args) {
 
     vio->print(123, "[%s]", "test");
 
-    return NULL;
+    getchar();
+    ff_main = 0;
+
+    pthread_exit(NULL);
 }
 
 void *fn_logger(void *args) {
 
-    while (1) {
+    while (ff_main) {
         logger->Send();
-        sleep_ms(100);
+        sleep_ms(10);
     }
-    return NULL;
+
+    pthread_exit(NULL);
 }
 
 int main(int argc, char **argv) {
@@ -49,8 +50,8 @@ int main(int argc, char **argv) {
 
     initialize();
 
-    pthread_create(&pt_main, NULL, fn_main, NULL);
     pthread_create(&pt_logger, NULL, fn_logger, NULL);
+    pthread_create(&pt_main, NULL, fn_main, NULL);
 
     pthread_join(pt_main, NULL);
     pthread_join(pt_logger, NULL);

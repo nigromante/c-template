@@ -1,7 +1,7 @@
 #include <stdarg.h>
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+// #include <stdlib.h>
+// #include <string.h>
 
 #define VIO_PUBLIC_C
 #include "include/vio_public.h"
