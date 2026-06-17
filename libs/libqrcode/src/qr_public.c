@@ -13,7 +13,32 @@
 #define WIDTH SIZE
 #define HEIGHT SIZE
 
+#define NEGRO "\x00\x00\x00"
+#define ROJO "\xaf\x00\x00"
+#define VERDE "\x00\xaf\x00"
+#define AZUL "\x00\x00\xaf"
+#define NARANJA "\xdf\x7f\x00"
+
+char pix_color[5][3];
+
+void pix_color_init() {
+    memcpy(pix_color[0], NEGRO, 3);
+    memcpy(pix_color[1], ROJO, 3);
+    memcpy(pix_color[2], VERDE, 3);
+    memcpy(pix_color[3], AZUL, 3);
+    memcpy(pix_color[4], NARANJA, 3);
+}
+
+void paint_pix(void *buffer) {
+    for (int i = 0; i < PIX_SIZE; i++) {
+        int r = rand() % 5;
+        memcpy(buffer + i * 3, pix_color[r], 3);
+    }
+}
+
 int qr_2_png(char *text, char *file) {
+
+    pix_color_init();
 
     QRcode *qr_data = QRcode_encodeString(text, 0, QR_ECLEVEL_L, QR_MODE_8, 1);
     if (qr_data == NULL) {
@@ -64,28 +89,33 @@ int qr_2_png(char *text, char *file) {
     // 6. Allocate memory for image pixels (3 bytes per pixel for RGB)
 
     // -------------------------------------------------
-    int tt = 3 * WIDTH * PIX_SIZE * sizeof(png_byte) + 48;
+    int tt = 3 * WIDTH * PIX_SIZE * sizeof(png_byte) + (2 * PIX_SIZE * 3);
     png_bytep row = malloc(tt);
+
     memset((void *)row, 0xff, tt);
     for (int i = 0; i < PIX_SIZE; i++) {
         png_write_row(png_ptr, row);
     }
+
     for (int y = 0; y < size; y++) {
         memset((void *)row, 0xff, tt);
-        for (int x = 0; x < size; x++) {
-            int pixel = _PIXEL_(x, y);
-            if (pixel) {
-                memset(row + 24 + (x * 24), 0, 24);
-            }
-        }
+
         for (int i = 0; i < PIX_SIZE; i++) {
+            for (int x = 0; x < size; x++) {
+                int pixel = _PIXEL_(x, y);
+                if (pixel) {
+                    paint_pix(row + 24 + (x * 24));
+                }
+            }
             png_write_row(png_ptr, row);
         }
     }
+
     memset((void *)row, 0xff, tt);
     for (int i = 0; i < PIX_SIZE; i++) {
         png_write_row(png_ptr, row);
     }
+
     free(row);
     // -------------------------------------------------
 
