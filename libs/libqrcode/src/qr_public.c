@@ -11,7 +11,7 @@
 #define BORDER 2
 #define BORDER_FULL (2 * BORDER)
 
-#define PIX_SIZE 16
+#define PIX_SIZE 10
 #define PIX_LEN 3
 #define _PIX_SIZE_ (PIX_SIZE * PIX_LEN)
 
@@ -116,12 +116,23 @@ int qr_2_png(char *text, char *file) {
 
     // -------------------------------------------------
     int tt = (WIDTH_FULL * _PIX_SIZE_);
-    printf("\n\nwidth %d  /  width_full %d  / total %d ", WIDTH, WIDTH_FULL, tt);
+    printf("\n\nwidth %d  /  width_full %d  / total %d  ///  %d ", WIDTH, WIDTH_FULL, tt, (PIX_SIZE * BORDER));
 
     png_bytep row = malloc(tt);
 
     for (int i = 0; i < PIX_SIZE * BORDER; i++) {
         pix_clear_line(row, WIDTH + BORDER_FULL);
+        if (i > BORDER * PIX_SIZE * 1 / 8 && i < BORDER * PIX_SIZE * 3 / 8)
+            for (int x = 0; x < size + BORDER_FULL; x++) {
+                paint_pix(row + (x * _PIX_SIZE_));
+            }
+        else {
+            for (int j = BORDER * PIX_SIZE * 1 / 8; j < BORDER * PIX_SIZE * 3 / 8; j++) {
+                int r = rand() % 5;
+                memcpy(row + j * PIX_LEN, pix_fg[r], PIX_LEN);
+                memcpy(row + tt - ((j + 1) * PIX_LEN), pix_fg[r], PIX_LEN);
+            }
+        }
         png_write_row(png_ptr, row);
     }
 
@@ -129,18 +140,37 @@ int qr_2_png(char *text, char *file) {
         pix_clear_line(row, WIDTH + BORDER_FULL);
 
         for (int i = 0; i < PIX_SIZE; i++) {
+
+            for (int j = BORDER * PIX_SIZE * 1 / 8; j < BORDER * PIX_SIZE * 3 / 8; j++) {
+                int r = rand() % 5;
+                memcpy(row + j * PIX_LEN, pix_fg[r], PIX_LEN);
+                memcpy(row + tt - ((j + 1) * PIX_LEN), pix_fg[r], PIX_LEN);
+            }
+
             for (int x = 0; x < size; x++) {
                 int pixel = _PIXEL_(x, y);
                 if (pixel) {
                     paint_pix(row + ((BORDER + x) * _PIX_SIZE_));
                 }
             }
+
             png_write_row(png_ptr, row);
         }
     }
 
     for (int i = 0; i < PIX_SIZE * BORDER; i++) {
         pix_clear_line(row, WIDTH + BORDER_FULL);
+        if (i > BORDER * PIX_SIZE * 5 / 8 && i < BORDER * PIX_SIZE * 7 / 8)
+            for (int x = 0; x < size + BORDER_FULL; x++) {
+                paint_pix(row + (x * _PIX_SIZE_));
+            }
+        else {
+            for (int j = BORDER * PIX_SIZE * 1 / 8; j < BORDER * PIX_SIZE * 3 / 8; j++) {
+                int r = rand() % 5;
+                memcpy(row + j * PIX_LEN, pix_fg[r], PIX_LEN);
+                memcpy(row + tt - ((j + 1) * PIX_LEN), pix_fg[r], PIX_LEN);
+            }
+        }
         png_write_row(png_ptr, row);
     }
 

@@ -11,7 +11,7 @@ void *fn_raylib(void *args) {
     char *texto = (char *)args;
 
     SetTraceLogLevel(LOG_NONE);
-    InitWindow(800, 600, "QR Code");
+    InitWindow(960, 800, "QR Code");
 
     Texture2D background = LoadTexture("background.png");
 
