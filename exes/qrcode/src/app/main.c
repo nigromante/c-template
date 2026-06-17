@@ -18,25 +18,18 @@ void initialize() {
     logger->AddListener(log_stdout, log_env.stdout);
     logger->AddListener(log_mailer, log_env.mailer);
 }
-void replace_char(char *str, char find, char replace) {
-    while ((str = strchr(str, find)) != NULL) {
-        *str = replace;
-        str++; // Move to next character to prevent an infinite loop
-    }
-}
 
 int main(int argc, char **argv) {
     pthread_t pt_main;
     pthread_t pt_raylib;
     pthread_t pt_logger;
 
-    vio->print("argv1 : [%s] ", argv[1]);
-
     initialize();
 
     char texto[256];
     strcpy(texto, argv[1]);
     replace_char(texto, '_', ' ');
+    vio->print("texto : [%s] ", texto);
 
     pthread_create(&pt_logger, NULL, fn_logger, NULL);
     pthread_create(&pt_main, NULL, fn_terminal, NULL);
