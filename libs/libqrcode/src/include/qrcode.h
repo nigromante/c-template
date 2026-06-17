@@ -3,13 +3,13 @@
 
 typedef struct {
 
-    void (*version)();
-    int (*show)(char *);
+    int (*qr2png)(char *text, char *file);
 
-    int (*callback)(int, int, char *text, void (*p)(int, int, int, int, int));
 } QRCODE;
 
 QRCODE *qrcode_init();
 void qrcode_release(QRCODE **);
-int qrcallback(int, int, char *text, void (*p)(int, int, int, int, int));
+
+int qr_2_png(char *text, char *file);
+
 #endif

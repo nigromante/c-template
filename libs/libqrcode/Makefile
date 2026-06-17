@@ -33,7 +33,7 @@ CC = gcc
 CFLAGS = -Wall -g -fPIC -fvisibility=hidden
 #LDFLAGS = -L./lib -shared 
 LDFLAGS = -shared 
-LDLIBS = -lqrencode
+LDLIBS = -lqrencode -lz -lpng
 
 DEPSFLAGS = -MMD -MP -MF $(SRCDIR)
 
