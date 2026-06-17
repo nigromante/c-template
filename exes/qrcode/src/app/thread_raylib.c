@@ -24,8 +24,8 @@ void *fn_raylib(void *args) {
         ClearBackground(RAYWHITE);
         DrawTexture(background, 0, 0, WHITE);
 
-        DrawText(texto, 40, 70, 20, RED);
-        DrawTexture(qrpng, 40, 100, WHITE);
+        DrawText(texto, 40, 10, 20, RED);
+        DrawTexture(qrpng, 40, 40, WHITE);
 
         EndDrawing();
     }

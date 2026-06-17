@@ -8,10 +8,16 @@
 
 #define _PIXEL_(x, y) (qr_data->data[(y) * qr_data->width + (x)] & 1)
 
-#define PIX_SIZE 8
+#define PIX_SIZE 16
+
 #define SIZE (size)
 #define WIDTH SIZE
 #define HEIGHT SIZE
+
+#define BLANCO "\xff\xff\xff"
+#define AMARILLO "\xff\xff\xd0"
+#define AMARILLO2 "\xee\xee\x66"
+#define NARANJA2 "\xff\xe0\x00"
 
 #define NEGRO "\x00\x00\x00"
 #define ROJO "\xaf\x00\x00"
@@ -19,20 +25,33 @@
 #define AZUL "\x00\x00\xaf"
 #define NARANJA "\xdf\x7f\x00"
 
-char pix_color[5][3];
+char pix_fg[5][3];
+char pix_bg[5][3];
 
 void pix_color_init() {
-    memcpy(pix_color[0], NEGRO, 3);
-    memcpy(pix_color[1], ROJO, 3);
-    memcpy(pix_color[2], VERDE, 3);
-    memcpy(pix_color[3], AZUL, 3);
-    memcpy(pix_color[4], NARANJA, 3);
+    memcpy(pix_fg[0], NEGRO, 3);
+    memcpy(pix_fg[1], ROJO, 3);
+    memcpy(pix_fg[2], VERDE, 3);
+    memcpy(pix_fg[3], AZUL, 3);
+    memcpy(pix_fg[4], NARANJA, 3);
+
+    memcpy(pix_bg[0], BLANCO, 3);
+    memcpy(pix_bg[1], AMARILLO, 3);
+    memcpy(pix_bg[2], AMARILLO2, 3);
+    memcpy(pix_bg[3], NARANJA2, 3);
 }
 
 void paint_pix(void *buffer) {
     for (int i = 0; i < PIX_SIZE; i++) {
         int r = rand() % 5;
-        memcpy(buffer + i * 3, pix_color[r], 3);
+        memcpy(buffer + i * 3, pix_fg[r], 3);
+    }
+}
+
+void pix_clear_line(void *buffer, int size) {
+    for (int i = 0; i < size * PIX_SIZE * 3; i += 3) {
+        int r = rand() % 2;
+        memcpy(buffer + i, pix_bg[r], 3);
     }
 }
 
@@ -47,7 +66,7 @@ int qr_2_png(char *text, char *file) {
 
     int size = qr_data->width;
 
-    FILE *fp = fopen("qrcode.png", "wb");
+    FILE *fp = fopen(file, "wb");
     if (!fp) {
         perror("File opening failed");
         return EXIT_FAILURE;
@@ -92,27 +111,27 @@ int qr_2_png(char *text, char *file) {
     int tt = 3 * WIDTH * PIX_SIZE * sizeof(png_byte) + (2 * PIX_SIZE * 3);
     png_bytep row = malloc(tt);
 
-    memset((void *)row, 0xff, tt);
     for (int i = 0; i < PIX_SIZE; i++) {
+        pix_clear_line(row, WIDTH + 2);
         png_write_row(png_ptr, row);
     }
 
     for (int y = 0; y < size; y++) {
-        memset((void *)row, 0xff, tt);
+        pix_clear_line(row, WIDTH + 2);
 
         for (int i = 0; i < PIX_SIZE; i++) {
             for (int x = 0; x < size; x++) {
                 int pixel = _PIXEL_(x, y);
                 if (pixel) {
-                    paint_pix(row + 24 + (x * 24));
+                    paint_pix(row + 3 * PIX_SIZE + (x * 3 * PIX_SIZE));
                 }
             }
             png_write_row(png_ptr, row);
         }
     }
 
-    memset((void *)row, 0xff, tt);
     for (int i = 0; i < PIX_SIZE; i++) {
+        pix_clear_line(row, WIDTH + 2);
         png_write_row(png_ptr, row);
     }
 
