@@ -8,18 +8,18 @@
 
 #define _PIXEL_(x, y) (qr_data->data[(y) * qr_data->width + (x)] & 1)
 
-#define BORDER 2
+#define BORDER 1
 #define BORDER_FULL (2 * BORDER)
 
 #define PIX_SIZE 10
 #define PIX_LEN 3
 #define _PIX_SIZE_ (PIX_SIZE * PIX_LEN)
 
-#define SIZE (size)
-#define WIDTH SIZE
-#define HEIGHT SIZE
+#define WIDTH (qr_data->width)
 
 #define WIDTH_FULL (BORDER_FULL + WIDTH)
+
+#define BUFF_SIZE (WIDTH_FULL * _PIX_SIZE_)
 
 #define BLANCO "\xff\xff\xff"
 #define AMARILLO "\xff\xff\xd0"
@@ -34,6 +34,7 @@
 
 char pix_fg[5][PIX_LEN];
 char pix_bg[5][PIX_LEN];
+char pix_ag[9][PIX_LEN];
 
 void pix_color_init() {
     memcpy(pix_fg[0], NEGRO, PIX_LEN);
@@ -46,6 +47,16 @@ void pix_color_init() {
     memcpy(pix_bg[1], AMARILLO, PIX_LEN);
     memcpy(pix_bg[2], AMARILLO2, PIX_LEN);
     memcpy(pix_bg[3], NARANJA2, PIX_LEN);
+
+    memcpy(pix_ag[0], NEGRO, PIX_LEN);
+    memcpy(pix_ag[1], ROJO, PIX_LEN);
+    memcpy(pix_ag[2], VERDE, PIX_LEN);
+    memcpy(pix_ag[3], AZUL, PIX_LEN);
+    memcpy(pix_ag[4], NARANJA, PIX_LEN);
+    memcpy(pix_ag[5], BLANCO, PIX_LEN);
+    memcpy(pix_ag[6], AMARILLO, PIX_LEN);
+    memcpy(pix_ag[7], AMARILLO2, PIX_LEN);
+    memcpy(pix_ag[8], NARANJA2, PIX_LEN);
 }
 
 void paint_pix(void *buffer) {
@@ -71,7 +82,7 @@ int qr_2_png(char *text, char *file) {
         return 1;
     }
 
-    int size = qr_data->width;
+    // int size = qr_data->width;
 
     FILE *fp = fopen(file, "wb");
     if (!fp) {
@@ -116,18 +127,17 @@ int qr_2_png(char *text, char *file) {
 
     // -------------------------------------------------
     int tt = (WIDTH_FULL * _PIX_SIZE_);
-    printf("\n\nwidth %d  /  width_full %d  / total %d  ///  %d ", WIDTH, WIDTH_FULL, tt, (PIX_SIZE * BORDER));
 
     png_bytep row = malloc(tt);
 
     for (int i = 0; i < PIX_SIZE * BORDER; i++) {
         pix_clear_line(row, WIDTH + BORDER_FULL);
-        if (i > BORDER * PIX_SIZE * 1 / 8 && i < BORDER * PIX_SIZE * 3 / 8)
-            for (int x = 0; x < size + BORDER_FULL; x++) {
+        if (i < BORDER * PIX_SIZE * 3 / 8)
+            for (int x = 0; x < WIDTH + BORDER_FULL; x++) {
                 paint_pix(row + (x * _PIX_SIZE_));
             }
         else {
-            for (int j = BORDER * PIX_SIZE * 1 / 8; j < BORDER * PIX_SIZE * 3 / 8; j++) {
+            for (int j = 0; j < BORDER * PIX_SIZE * 3 / 8; j++) {
                 int r = rand() % 5;
                 memcpy(row + j * PIX_LEN, pix_fg[r], PIX_LEN);
                 memcpy(row + tt - ((j + 1) * PIX_LEN), pix_fg[r], PIX_LEN);
@@ -136,18 +146,18 @@ int qr_2_png(char *text, char *file) {
         png_write_row(png_ptr, row);
     }
 
-    for (int y = 0; y < size; y++) {
+    for (int y = 0; y < WIDTH; y++) {
         pix_clear_line(row, WIDTH + BORDER_FULL);
 
         for (int i = 0; i < PIX_SIZE; i++) {
 
-            for (int j = BORDER * PIX_SIZE * 1 / 8; j < BORDER * PIX_SIZE * 3 / 8; j++) {
+            for (int j = 0; j < BORDER * PIX_SIZE * 3 / 8; j++) {
                 int r = rand() % 5;
                 memcpy(row + j * PIX_LEN, pix_fg[r], PIX_LEN);
                 memcpy(row + tt - ((j + 1) * PIX_LEN), pix_fg[r], PIX_LEN);
             }
 
-            for (int x = 0; x < size; x++) {
+            for (int x = 0; x < WIDTH; x++) {
                 int pixel = _PIXEL_(x, y);
                 if (pixel) {
                     paint_pix(row + ((BORDER + x) * _PIX_SIZE_));
@@ -160,12 +170,12 @@ int qr_2_png(char *text, char *file) {
 
     for (int i = 0; i < PIX_SIZE * BORDER; i++) {
         pix_clear_line(row, WIDTH + BORDER_FULL);
-        if (i > BORDER * PIX_SIZE * 5 / 8 && i < BORDER * PIX_SIZE * 7 / 8)
-            for (int x = 0; x < size + BORDER_FULL; x++) {
+        if (i > BORDER * PIX_SIZE * 5 / 8)
+            for (int x = 0; x < WIDTH + BORDER_FULL; x++) {
                 paint_pix(row + (x * _PIX_SIZE_));
             }
         else {
-            for (int j = BORDER * PIX_SIZE * 1 / 8; j < BORDER * PIX_SIZE * 3 / 8; j++) {
+            for (int j = 0; j < BORDER * PIX_SIZE * 3 / 8; j++) {
                 int r = rand() % 5;
                 memcpy(row + j * PIX_LEN, pix_fg[r], PIX_LEN);
                 memcpy(row + tt - ((j + 1) * PIX_LEN), pix_fg[r], PIX_LEN);
