@@ -16,6 +16,7 @@ void *fn_raylib(void *args) {
 
     Texture2D background = LoadTexture("background.png");
 
+    /*
     QRCODE_PARAM param;
     strcpy(param.text, texto);
     strcpy(param.file, "qrcode.png");
@@ -23,6 +24,7 @@ void *fn_raylib(void *args) {
     param.pixsize = 12;
     param.pointsize = 2;
     qrcode->qr2png(&param);
+    */
 
     Texture2D qrpng = LoadTexture("qrcode.png");
 

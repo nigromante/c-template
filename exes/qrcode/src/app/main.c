@@ -32,7 +32,7 @@ int main(int argc, char **argv) {
     vio->print("texto : [%s] ", texto);
 
     pthread_create(&pt_logger, NULL, fn_logger, NULL);
-    pthread_create(&pt_main, NULL, fn_terminal, NULL);
+    pthread_create(&pt_main, NULL, fn_terminal, texto);
     pthread_create(&pt_raylib, NULL, fn_raylib, texto);
 
     pthread_join(pt_main, NULL);

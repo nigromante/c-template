@@ -4,4 +4,5 @@
 test/libs
 **/*.d
 analisis
-qrcode.png
+qrcode*.png
+radio*.png
