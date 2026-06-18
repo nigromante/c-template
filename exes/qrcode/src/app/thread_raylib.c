@@ -2,6 +2,7 @@
 #include "include/thread_raylib.h"
 #include "raylib.h"
 #include <pthread.h>
+#include <string.h>
 
 #include "../framework/include/libscall.h"
 
@@ -15,7 +16,14 @@ void *fn_raylib(void *args) {
 
     Texture2D background = LoadTexture("background.png");
 
-    qrcode->qr2png(texto, "qrcode.png");
+    QRCODE_PARAM param;
+    strcpy(param.text, texto);
+    strcpy(param.file, "qrcode.png");
+    param.border = 1;
+    param.pixsize = 12;
+    param.pointsize = 2;
+    qrcode->qr2png(&param);
+
     Texture2D qrpng = LoadTexture("qrcode.png");
 
     while (!WindowShouldClose()) {

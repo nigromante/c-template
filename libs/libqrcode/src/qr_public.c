@@ -5,15 +5,16 @@
 #include <string.h>
 
 #include "include/qr_public.h"
+#include "include/qrcode.h"
 
 #define _PIXEL_(x, y) (qr_data->data[(y) * qr_data->width + (x)] & 1)
 
-#define BORDER 1
+#define BORDER (param->border)
 #define BORDER_FULL (2 * BORDER)
 
-#define PIX_SIZE 10
+#define PIX_SIZE (param->pixsize)
 #define PIX_LEN 3
-#define _PIX_SIZE_ (PIX_SIZE * PIX_LEN)
+#define _PIX_SIZE_ ((param->pixsize) * PIX_LEN)
 
 #define WIDTH (qr_data->width)
 
@@ -59,32 +60,30 @@ void pix_color_init() {
     memcpy(pix_ag[8], NARANJA2, PIX_LEN);
 }
 
-void paint_pix(void *buffer) {
+void paint_pix(QRCODE_PARAM *param, void *buffer) {
     for (int i = 0; i < PIX_SIZE; i++) {
         int r = rand() % 5;
         memcpy(buffer + i * PIX_LEN, pix_fg[r], PIX_LEN);
     }
 }
 
-void pix_clear_line(void *buffer, int size) {
+void pix_clear_line(QRCODE_PARAM *param, void *buffer, int size) {
     for (int i = 0; i < size * _PIX_SIZE_; i += PIX_LEN) {
         int r = rand() % 2;
         memcpy(buffer + i, pix_bg[r], PIX_LEN);
     }
 }
 
-int qr_2_png(char *text, char *file) {
+int qr_2_png(QRCODE_PARAM *param) {
 
     pix_color_init();
 
-    QRcode *qr_data = QRcode_encodeString(text, 0, QR_ECLEVEL_L, QR_MODE_8, 1);
+    QRcode *qr_data = QRcode_encodeString(param->text, 0, QR_ECLEVEL_L, QR_MODE_8, 1);
     if (qr_data == NULL) {
         return 1;
     }
 
-    // int size = qr_data->width;
-
-    FILE *fp = fopen(file, "wb");
+    FILE *fp = fopen(param->file, "wb");
     if (!fp) {
         perror("File opening failed");
         return EXIT_FAILURE;
@@ -131,10 +130,10 @@ int qr_2_png(char *text, char *file) {
     png_bytep row = malloc(tt);
 
     for (int i = 0; i < PIX_SIZE * BORDER; i++) {
-        pix_clear_line(row, WIDTH + BORDER_FULL);
+        pix_clear_line(param, row, WIDTH + BORDER_FULL);
         if (i < BORDER * PIX_SIZE * 3 / 8)
             for (int x = 0; x < WIDTH + BORDER_FULL; x++) {
-                paint_pix(row + (x * _PIX_SIZE_));
+                paint_pix(param, row + (x * _PIX_SIZE_));
             }
         else {
             for (int j = 0; j < BORDER * PIX_SIZE * 3 / 8; j++) {
@@ -147,7 +146,7 @@ int qr_2_png(char *text, char *file) {
     }
 
     for (int y = 0; y < WIDTH; y++) {
-        pix_clear_line(row, WIDTH + BORDER_FULL);
+        pix_clear_line(param, row, WIDTH + BORDER_FULL);
 
         for (int i = 0; i < PIX_SIZE; i++) {
 
@@ -160,7 +159,7 @@ int qr_2_png(char *text, char *file) {
             for (int x = 0; x < WIDTH; x++) {
                 int pixel = _PIXEL_(x, y);
                 if (pixel) {
-                    paint_pix(row + ((BORDER + x) * _PIX_SIZE_));
+                    paint_pix(param, row + ((BORDER + x) * _PIX_SIZE_));
                 }
             }
 
@@ -169,10 +168,10 @@ int qr_2_png(char *text, char *file) {
     }
 
     for (int i = 0; i < PIX_SIZE * BORDER; i++) {
-        pix_clear_line(row, WIDTH + BORDER_FULL);
+        pix_clear_line(param, row, WIDTH + BORDER_FULL);
         if (i > BORDER * PIX_SIZE * 5 / 8)
             for (int x = 0; x < WIDTH + BORDER_FULL; x++) {
-                paint_pix(row + (x * _PIX_SIZE_));
+                paint_pix(param, row + (x * _PIX_SIZE_));
             }
         else {
             for (int j = 0; j < BORDER * PIX_SIZE * 3 / 8; j++) {
