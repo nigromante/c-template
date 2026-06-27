@@ -1,4 +1,2 @@
-
-void qrversion();
-
-int qrshow(char *text);
+#include "png_wrap.h"
+#include "qr_wrap.h"

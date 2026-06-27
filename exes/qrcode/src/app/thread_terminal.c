@@ -17,6 +17,13 @@ void *fn_terminal(void *args) {
     QRCODE_PARAM param;
     strcpy(param.text, texto);
 
+    sprintf(param.file, "radio_test_%d_%d.png", 8, 0);
+    param.border = 1;
+    param.pixsize = 16;
+    param.pointsize = 1;
+    qrcode->qr2png(&param);
+
+    /*
     int _border[] = {0, 1, 2, 3};
     int _pixsize[] = {1, 2, 4, 8, 12};
     for (int x = 0; x < 5; x++) {
@@ -28,6 +35,7 @@ void *fn_terminal(void *args) {
             qrcode->qr2png(&param);
         }
     }
+    */
 
     // getchar();
     ff_terminal = 0;
