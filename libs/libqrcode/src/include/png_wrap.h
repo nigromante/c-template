@@ -9,6 +9,19 @@
 
 #define PIX_LEN 3
 
+#define BORDER (png_api->border)
+#define BORDER_FULL (2 * BORDER)
+
+#define PIX_SIZE (png_api->pix_size)
+#define _PIX_SIZE_ (PIX_SIZE * PIX_LEN)
+
+#define WIDTH (png_api->width)
+
+#define WIDTH_FULL (BORDER_FULL + WIDTH)
+
+#define BUFF_SIZE (WIDTH_FULL * PIX_SIZE)
+#define BUFF_SIZE_FULL (WIDTH_FULL * _PIX_SIZE_)
+
 typedef struct {
     int (*png_create)(char *file, int pix_size, int border);
     void (*set_size)(int w, int h);
