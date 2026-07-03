@@ -60,5 +60,5 @@ int wrap_png_create(char *file, int pix_size, int border);
 void wrap_png_set_size(int w, int h);
 void wrap_png_set_pixel(int x, int y);
 void wrap_png_finish();
-void wrap_png_flush();
+void wrap_png_draw();
 #endif

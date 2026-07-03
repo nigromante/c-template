@@ -14,7 +14,7 @@ void wrap_png_load() {
     png_api->set_size = wrap_png_set_size;
     png_api->set_pixel = wrap_png_set_pixel;
     png_api->finish = wrap_png_finish;
-    png_api->flush = wrap_png_flush;
+    png_api->flush = wrap_png_draw;
 
     pix_color_init();
 }
@@ -73,43 +73,6 @@ void wrap_png_finish() {
     free(png_api->buffer);
 }
 
-void wrap_png_flush() {
-    int r = 0;
-    printf("buff_size : %d : pix_size %d : width_full : %d :  width : %d ", BUFF_SIZE, PIX_SIZE, WIDTH_FULL, png_api->width);
-
-    // Prepare background
-    for (int y = 0; y < WIDTH; y++) {
-        for (int x = 0; x < WIDTH; x++) {
-            int offset = (y + BORDER) * BUFF_SIZE_FULL + x * _PIX_SIZE_ + BORDER * _PIX_SIZE_;
-            for (int j = 0; j < PIX_SIZE; j++) {
-                r = rand() % 5;
-                memcpy(png_api->buffer + offset + j * 3, pix_fg[r], 3);
-            }
-        }
-    }
-
-    // Draw qr
-    for (int y = 0; y < WIDTH; y++) {
-        for (int x = 0; x < WIDTH; x++) {
-            if (*(png_api->data + y * WIDTH + x) == 0) {
-                int offset = (y + BORDER) * BUFF_SIZE_FULL + x * _PIX_SIZE_ + BORDER * _PIX_SIZE_;
-                for (int j = 0; j < PIX_SIZE; j++) {
-                    r = rand() % 4;
-                    memcpy(png_api->buffer + offset + j * 3, pix_bg[r], 3);
-                }
-            }
-        }
-    }
-
-    // Write 2 png
-    for (int j = 0; j < BUFF_SIZE; j++) {
-        for (int k = 0; k < PIX_SIZE; k++) {
-            png_write_row(png_api->png_ptr, (png_bytep)png_api->buffer + BUFF_SIZE_FULL * j);
-        }
-    }
-    return;
-}
-
 void wrap_png_set_size(int w, int h) {
 
     png_api->width = w;
@@ -119,7 +82,7 @@ void wrap_png_set_size(int w, int h) {
     memset(png_api->data, 0x00, WIDTH * WIDTH);
 
     png_api->buffer = (char *)malloc(BUFF_SIZE * BUFF_SIZE_FULL);
-    memset(png_api->buffer, 0xff, BUFF_SIZE * BUFF_SIZE_FULL);
+    memset(png_api->buffer, 0xf0, BUFF_SIZE * BUFF_SIZE_FULL);
 
     // 5. Write PNG header info (Width, Height, Bit Depth, Color Type)
     png_set_IHDR(png_api->png_ptr, png_api->info_ptr, WIDTH_FULL * PIX_SIZE, WIDTH_FULL * PIX_SIZE,
@@ -132,6 +95,52 @@ void wrap_png_set_size(int w, int h) {
 
 void wrap_png_set_pixel(int x, int y) {
     *(png_api->data + WIDTH * y + x) = 1;
+    return;
+}
+void wrap_png_draw_pixel(int row, int col, int size) {
+    int s_row = (row + BORDER) * size;
+    for (int i_row = 0; i_row < size; i_row++) {
+        int o_row = (s_row + i_row) * BUFF_SIZE_FULL;
+        for (int j = 0; j < size; j++) {
+            int o_x = o_row + (col * size * PIX_LEN) + (BORDER * size * PIX_LEN);
+            memcpy(png_api->buffer + o_x + j * PIX_LEN, pix_bg[rand() % 4], PIX_LEN);
+        }
+    }
+}
+
+void wrap_png_draw() {
+
+    // Prepare background
+    for (int j = 0; j < BUFF_SIZE; j++) {
+        for (int i = 0; i < BUFF_SIZE_FULL; i += 3) {
+            memcpy(png_api->buffer + j * BUFF_SIZE_FULL + i * 3, pix_fg[rand() % 5], 3);
+        }
+    }
+
+    // Border
+    for (int i = 0; i < WIDTH_FULL; i++) {
+        wrap_png_draw_pixel(-BORDER, i, PIX_SIZE);
+        wrap_png_draw_pixel(WIDTH, i, PIX_SIZE);
+    }
+
+    for (int i = 0; i <= WIDTH; i++) {
+        wrap_png_draw_pixel(i - 1, -1, PIX_SIZE);
+        wrap_png_draw_pixel(i - 1, WIDTH, PIX_SIZE);
+    }
+
+    // Draw qr
+    for (int y = 0; y < WIDTH; y++) {
+        for (int x = 0; x < WIDTH; x++) {
+            if (*(png_api->data + y * WIDTH + x) == 0) {
+                wrap_png_draw_pixel(x, y, PIX_SIZE);
+            }
+        }
+    }
+
+    // Write 2 png
+    for (int j = 0; j < BUFF_SIZE; j++) {
+        png_write_row(png_api->png_ptr, (png_bytep)png_api->buffer + BUFF_SIZE_FULL * j);
+    }
     return;
 }
 
