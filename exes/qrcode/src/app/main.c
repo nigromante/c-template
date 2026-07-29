@@ -11,10 +11,6 @@
 
 void initialize() {
 
-    load_env(".env");
-
-    logger_init();
-
     logger->AddListener(log_stdout, log_env.stdout);
     logger->AddListener(log_mailer, log_env.mailer);
 }

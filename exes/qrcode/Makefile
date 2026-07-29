@@ -27,7 +27,7 @@ INCLUDE = -I include -I $(TESTDIR)/include
 
 # Compiler flags
 CC = gcc
-CFLAGS = -Wall -g
+CFLAGS = -Wall -g -c
 DEPSFLAGS = -MMD -MP -MF $(SRCDIR)/$*.d 
 
 # Linker flags
@@ -58,7 +58,7 @@ $(BINDIR):
 $(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
 	@if [ ! -d "$(dir $@)" ]; then mkdir -p $(dir $@); fi
 	@echo -n "\t${YELLOW}"  
-	$(CC) $(DEPSFLAGS) $(CFLAGS) $(INCLUDE) -c $< -o $@
+	$(CC) $(DEPSFLAGS) $(CFLAGS) $(INCLUDE)  $< -o $@
 	@echo -n "${RESET}"  
 
 $(OBJDIR):

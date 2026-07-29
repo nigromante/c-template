@@ -4,6 +4,10 @@
 
 __attribute__((constructor)) void loader_init() {
 
+    load_env(".env");
+
+    logger_init();
+
     qrcode = qrcode_init();
     logger = log_init();
     vio = vio_init();
